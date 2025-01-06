@@ -1,0 +1,32 @@
+<style>
+        .flex-wrap {
+            display: flex; /* Enables flex layout */
+            align-items: flex-start; /* Aligns items to the top */
+            gap: 15px; /* Adds space between items */
+        }
+        .flex-wrap img {
+            max-width: 30%; /* Restricts image width for flexibility */
+            height: auto; /* Maintains aspect ratio */
+        }
+		.flex-wrap-header {
+            display: flex; /* Enables flex layout */
+            align-items: flex-start; /* Aligns items to the top */
+            gap: 15px; /* Adds space between items */
+			background-color: red;
+			justify-content: center;
+        }
+		.flex-wrap-container> div {
+			background-color: white;
+			margin: 40px;
+			padding: 10px;
+			font-size: 20px;
+		}
+        .flex-wrap-header img {
+            max-width: 30%; /* Restricts image width for flexibility */
+            height: auto; /* Maintains aspect ratio */
+        }
+        .flex-wrap-header p {
+            flex: 1; /* Makes paragraph take up remaining space */
+        }
+
+    </style>
