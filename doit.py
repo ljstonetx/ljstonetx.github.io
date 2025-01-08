@@ -1,12 +1,14 @@
 #change log
 #12/20/2024 Fixed missing cards: A110 and 0102 had to be copied from "additonal" directory to imagesColorized
 #12/20/2024 Had to edit the postcards csv file to remove "copy" form the key for "A110". Not sure hSow it get there
+#TODO Citations for Texas Historic Archive Cards, also improve descriptions
+#TODO Update github repository
 import csv
 
 conSiteShortTitle = "Mercedes Historic Photograps"
 conSiteLongTitle = "Mercedes Texas Historic Photographs 1900s to 1950s"
 conEmailAddress = "mercedestxhx@gmail.com"
-conNumCards=172
+conNumCards=175
 conNumSubjects=17
 conPostCardFile='PostcardCorrectedQuotesSorted.csv'
 conSubjectsFile='postcardViewsSorted.csv'
@@ -98,14 +100,14 @@ def writeSubjects():
         FW.write('<div class="row">')
         subject = writeColumn(FW, reader, 0)
         writeSubjectFile(subject)
-        if count < 16:
+        if count < conNumSubjects-1:
             #start column 2
             subject = writeColumn(FW, reader,0)
             count+=1
             FW.write('<div><div><div>')
             writeSubjectFile(subject) 
         # the next is writing the citations
-        if count == 16:  
+        if count == conNumSubjects-1:  
             writeColumn(FW, reader, 1)
             count=count+1
             FW.write('<div><div><div>')
