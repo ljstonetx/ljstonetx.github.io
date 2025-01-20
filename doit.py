@@ -8,11 +8,12 @@ import csv
 conSiteShortTitle = "Mercedes Historic Photograps"
 conSiteLongTitle = "Mercedes Texas Historic Photographs 1900s to 1950s"
 conEmailAddress = "mercedestxhx@gmail.com"
-conNumCards=175
+conNumCards=195
 conNumSubjects=17
-conPostCardFile='PostcardCorrectedQuotesSorted.csv'
+conPostCardFile='PostcardSorted.csv'
 conSubjectsFile='postcardViewsSorted.csv'
 conColorFileName = 'imagesColorized/'
+conSMUlink = 'https://digitalcollections.smu.edu/digital/collection/tex/id/'
 
 def makeHtmlSubjectFilename(category):  
     catNoSpace = category.replace(" ", "")
@@ -162,7 +163,7 @@ def writeSubjectFile(subject):
             writeDescription(FW, description)
             FW.write('<br><br><a href=' + imageColorFile + '>' + 'View Enlarged</a> &nbsp; &nbsp;')
             if smu != "none":
-                FW.write('<a href=' + 'https://digitalcollections.smu.edu/digital/collection/tex/id/' + smu   + '/>View High Resolution</a>')       
+                FW.write('<a href=' + conSMUlink + smu   + '/>View High Resolution</a>')       
             FW.write('</div>')
             
         writeHeader(FW,subject) 
