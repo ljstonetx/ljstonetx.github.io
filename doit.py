@@ -1,24 +1,58 @@
+#Domain setup
+#1. do nslookup for ljstone.github.com
+#there will be several addresses at the bottom, get one of them. For example
+#mercedextx.com 185.1999.110.153
+#www.mercedestx.com 185.1999.110.153
+#2.Domain mercedestx.com is registered with Wix
+#In Wix, go to Billing & Subscription, Pages, Domains, 
+#mercedestx, click on ellipse, select , Select DNS Records. 
+#3.Add A (Host) records for the address obtained in the nslookpu 
+#We tried to use CNAME ljstone.gethub.io, but it
+#would not let use put the www.mercedestx.com only mercedestx.com
+#so as a workaround used the A records. But will need to update these if github
+#changes the ip addresses
+#4.go to ljstone.github.io. Go to Pages, Settings, domains. 
+#add custom domain mercedestx.com
+#
 #change log
 #12/20/2024 Fixed missing cards: A110 and 0102 had to be copied from "additonal" directory to imagesColorized
 #12/20/2024 Had to edit the postcards csv file to remove "copy" form the key for "A110". Not sure hSow it get there
-#TODO Citations for Texas Historic Archive Cards, also improve descriptions
+#
 #TODO Update github repository
+
 import csv
 
 conSiteShortTitle = "Mercedes Historic Photograps"
 conSiteLongTitle = "Mercedes Texas Historic Photographs 1900s to 1950s"
-conEmailAddress = "mercedestxhx@gmail.com"
+conEmailAddress = "mercedestx@gmail.com"
 conNumCards=195
 conNumSubjects=17
 conPostCardFile='PostcardSorted.csv'
 conSubjectsFile='postcardViewsSorted.csv'
 conColorFileName = 'imagesColorized/'
-conSMUlink = 'https://digitalcollections.smu.edu/digital/collection/tex/id/'
+conSMUlink         = 'https://digitalcollections.smu.edu/digital/collection/tex/id/'
+
 
 def makeHtmlSubjectFilename(category):  
     catNoSpace = category.replace(" ", "")
     return "PChtml" + catNoSpace + ".html"
 
+def writeSourceLink(FW, imageSource, imageId):
+    
+    conSMULink         = 'https://digitalcollections.smu.edu/digital/collection/tex/id/'
+    conUTRGVStudioLink = 'https://scholarworks.utrgv.edu/rgvstudio/' 
+    conUTRGVMiscLink   = 'https://scholarworks.utrgv.edu/miscphotosedinburg/' 
+    conSMU = "SMU"
+    conUTRGVSTUDIO = "UTRGVSTUDIO"
+    conUTRGVMISC   = "UTRGVMISC"
+    
+    if imageSource == conSMU:
+        FW.write('<a href=' + conSMULink + imageId        + '/>View High Resolution</a>')
+    elif imageSource == conUTRGVSTUDIO: 
+        FW.write('<a href=' + conUTRGVStudioLink + imageId   + '/>View UTRGV Studio</a>')
+    elif imageSource == conUTRGVMISC:
+        FW.write('<a href=' + conUTRGVMiscLink + imageId  + '/>View UTRGV Miscellaneous</a>')
+    
 def writeStyle(FW):
     FW.write('<!DOCTYPE html>')
     FW.write('<html lang="en">')
@@ -128,11 +162,12 @@ def writeSubjectFile(subject):
     count=0
     keyIdx = 0
     smuIdx = 1
-    scoreIdx =2
-    headingIdx =3
-    subjectIdx =4
-    dateIdx =5
-    descriptionIdx =6
+    idIdx=2    
+    scoreIdx =3
+    headingIdx =4
+    subjectIdx =5
+    dateIdx =6
+    descriptionIdx =7
     FW= open(filename, "w+")    
     writeStyle(FW)   
     FW.write('</head><body><div>')
@@ -140,7 +175,6 @@ def writeSubjectFile(subject):
 
     from itertools import islice
     with open(conPostCardFile) as csvfile:
-    #with open('PostcardCorrectedQuotesSorted.csv') as csvfile:
         reader1 = csv.reader(csvfile)       
         for row in islice(reader1, conNumCards): 
            
@@ -152,7 +186,8 @@ def writeSubjectFile(subject):
             imageColorFile = makeColorFileName(key)   
             description = row[descriptionIdx]
             heading = row[headingIdx]
-            smu = row[smuIdx]
+            source = row[smuIdx]
+            id = row[idIdx]
             
             #write out the row
             FW.write('<div class="flex-wrap"><img src="'+ imageColorFile+ '">')
@@ -162,8 +197,9 @@ def writeSubjectFile(subject):
             FW.write('<font color="grey">' + date + ' </font><br><br>')             
             writeDescription(FW, description)
             FW.write('<br><br><a href=' + imageColorFile + '>' + 'View Enlarged</a> &nbsp; &nbsp;')
-            if smu != "none":
-                FW.write('<a href=' + conSMUlink + smu   + '/>View High Resolution</a>')       
+            writeSourceLink(FW, source, id)
+            #if smu == "none":
+            #    FW.write('<a href=' + conSMUlink + "SMU"   + '/>View High Resolution</a>')       
             FW.write('</div>')
             
         writeHeader(FW,subject) 
