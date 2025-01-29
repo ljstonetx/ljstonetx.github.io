@@ -30,8 +30,14 @@ conNumSubjects=17
 conPostCardFile='PostcardSorted.csv'
 conSubjectsFile='postcardViewsSorted.csv'
 conColorFileName = 'imagesColorized/'
-conSMUlink         = 'https://digitalcollections.smu.edu/digital/collection/tex/id/'
-
+conCitationsTitle = "Citations for Mercedes History Information" 
+conCitationsFile = "PChtmlCitations.html" 
+conSMULink         = 'https://digitalcollections.smu.edu/digital/collection/tex/id/'
+conUTRGVStudioLink = 'https://scholarworks.utrgv.edu/rgvstudio/' 
+conUTRGVMiscLink   = 'https://scholarworks.utrgv.edu/miscphotosedinburg/' 
+conSMU = "SMU"
+conUTRGVSTUDIO = "UTRGVSTUDIO"
+conUTRGVMISC   = "UTRGVMISC"
 
 def makeHtmlSubjectFilename(category):  
     catNoSpace = category.replace(" ", "")
@@ -39,12 +45,7 @@ def makeHtmlSubjectFilename(category):
 
 def writeSourceLink(FW, imageSource, imageId):
     
-    conSMULink         = 'https://digitalcollections.smu.edu/digital/collection/tex/id/'
-    conUTRGVStudioLink = 'https://scholarworks.utrgv.edu/rgvstudio/' 
-    conUTRGVMiscLink   = 'https://scholarworks.utrgv.edu/miscphotosedinburg/' 
-    conSMU = "SMU"
-    conUTRGVSTUDIO = "UTRGVSTUDIO"
-    conUTRGVMISC   = "UTRGVMISC"
+
     
     if imageSource == conSMU:
         FW.write('<a href=' + conSMULink + imageId        + '/>View High Resolution</a>')
@@ -89,8 +90,7 @@ def writeHeader(FW, subject):
     FW.write('</div>')
 
 def writeCitations(FW):
-    htmlCitationsName = "PChtmlCitations.html"
-    FW.write('<div>View source citations:  <a href=' + htmlCitationsName + '>' + 'View Citations </a></div>')
+    FW.write('<div>View source citations:  <a href=' + conCitationsFile + '>' + 'View Citations </a></div>')
     
 
 def writeDescription(FW, description):
@@ -102,7 +102,7 @@ def writeColumn(FW, reader, isCitations):
         key = line["key"] 
         imageColorFile = makeColorFileName(key)
         if isCitations == 1:
-            description = "Citations for Mercedes History Information"               
+            description = conCitationsTitle             
             htmlName= "PChtmlCitations.html"
         else:
             description = line["description"]             
@@ -190,17 +190,31 @@ def writeSubjectFile(subject):
             id = row[idIdx]
             
             #write out the row
-            FW.write('<div class="flex-wrap"><img src="'+ imageColorFile+ '">')
-            FW.write('<p class="b">')         
-            FW.write('<font color="grey"> ' + key + '</font> ')                     
-            FW.write('<font color="#cc0000"> <strong>' + heading + ' </strong></font>')  
-            FW.write('<font color="grey">' + date + ' </font><br><br>')             
-            writeDescription(FW, description)
-            FW.write('<br><br><a href=' + imageColorFile + '>' + 'View Enlarged</a> &nbsp; &nbsp;')
-            writeSourceLink(FW, source, id)
-            #if smu == "none":
-            #    FW.write('<a href=' + conSMUlink + "SMU"   + '/>View High Resolution</a>')       
+            conType = "media"
+            if conType == "full":
+                FW.write('<div class="flex-wrap"><img src="'+ imageColorFile+ '">')
+                FW.write('<p class="b">')         
+                FW.write('<font color="grey"> ' + key + '</font> ')                     
+                FW.write('<font color="#cc0000"> <strong>' + heading + ' </strong></font>')  
+                FW.write('<font color="grey">' + date + ' </font><br><br>')             
+                writeDescription(FW, description)
+                FW.write('<br><br><a href=' + imageColorFile + '>' + 'View Enlarged</a> &nbsp;&nbsp;')
+                writeSourceLink(FW, source, id)
+            else:
+                FW.write('<div>')
+                FW.write('<p class="b">')         
+                FW.write('<font color="blue"> ' + key + '</font> ')                     
+                FW.write('<font color="#cc0000"> <strong>' + heading + ' </strong></font>')  
+                FW.write('<font color="grey">' + date + ' </font>')
+                writeDescription(FW, description)
+                FW.write('<img src="'+ imageColorFile+ '"><br>')
+                FW.write('<br><br><a href=' + imageColorFile + '>' + 'View Enlarged</a>')
+                writeSourceLink(FW, source, id)
             FW.write('</div>')
+            
+            
+            
+            
             
         writeHeader(FW,subject) 
         FW.write('</body></html>')
