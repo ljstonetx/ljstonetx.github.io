@@ -190,7 +190,7 @@ def writeSubjectFile(subject):
             id = row[idIdx]
             
             #write out the row
-            conType = "media"
+            conType = "full"
             if conType == "full":
                 FW.write('<div class="flex-wrap"><img src="'+ imageColorFile+ '">')
                 FW.write('<p class="b">')         
@@ -200,17 +200,7 @@ def writeSubjectFile(subject):
                 writeDescription(FW, description)
                 FW.write('<br><br><a href=' + imageColorFile + '>' + 'View Enlarged</a> &nbsp;&nbsp;')
                 writeSourceLink(FW, source, id)
-            else:
-                FW.write('<div>')
-                FW.write('<p class="b">')         
-                FW.write('<font color="blue"> ' + key + '</font> ')                     
-                FW.write('<font color="#cc0000"> <strong>' + heading + ' </strong></font>')  
-                FW.write('<font color="grey">' + date + ' </font>')
-                writeDescription(FW, description)
-                FW.write('<img src="'+ imageColorFile+ '"><br>')
-                FW.write('<br><br><a href=' + imageColorFile + '>' + 'View Enlarged</a>')
-                writeSourceLink(FW, source, id)
-            FW.write('</div>')
+                FW.write('</div>')
             
             
             
