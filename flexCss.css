@@ -40,16 +40,33 @@ body {
   margin: 2.0em;
   margin-bottom: 3.0em;
 }
-.flex-wrap {display: flex; align-items: flex-start; gap: 15px;}
-.flex-wrap img {max-width: 30%; height: auto; }
+#.flex-wrap {display:  flex; align-items: flex-start; gap: 15px;}
+.flex-wrap {display: flex; flex-direction:column; justify-content: center; align-items: center; gap: 5px; }
+
+#.flex-wrap {display: flex; flex-direction:column; justify-content: center; align-items: flex-start; gap: 5px; }
+
+.flex-wrap img {max-width: 30%; height: auto flex-shrink:0; object-fit: contain}
+#.flex-wrap img {max-width: 30%; height: auto;}
+
 .flex-wrap p {flex: 1;}
+
+
+
 .flex-wrap-subjects {display: flex; align-items: flex-start; gap: 15px; }
-.flex-wrap-subjects img {max-width: 25%; height: auto; }
+#.flex-wrap-media {display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px;}
+.flex-wrap-media {display: flex; flex-direction: column; gap: 15px; justify-content: center; align-items: center;}
+.flex-wrap-media img {max-width: 30%; height: auto; }
+.flex-wrap-media p {flex: 1}
+
+.flex-wrap-subjects-media  {display: flex; justify-content: center; align-items: center; gap: 15px; }
+.flex-wrap-subjects img {max-width: 30%; height: auto; }
 .flex-wrap-subjects p {flex: 1;}
-.row	{display: flex; flex-direction: row;flex-wrap: wrap;width: 100%;}
-.column {display: flex;flex-direction: column;ex-basis: 100%;flex: 1;!background-color: Ivory;!height: 100px;}
-p.a {font-family: "Times New Roman", Times, serif;}
-p.b {font-family: "Arial Light", Helvetic, sans-serif;}
+
+.row	{display: flex; flex-direction
+: row;flex-wrap: wrap;width: 100%;}
+.column {display: flex; flex-direction: column;flex-basis: 100%;flex: 1;background-color: Ivory;!height: 100px;}
+p.a {font-family: "Arial Light", "Helvetic", sans-serif; font-size: 0.85rem;}
+p.b {font-family: "Arial Light", "Helvetic", sans-serif;}
 a:link, 
 a:visited {background-color: #80D8DA;color: black;padding: 10px;padding-left: 18px;padding-right: 18px;text-align: center;text-decoration: none;display: inline-block;border-radius:8px;}
 a:hover, 

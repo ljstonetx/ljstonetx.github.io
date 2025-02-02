@@ -97,8 +97,7 @@ def writeCitations(FW):
     
 
 def writeDescription(FW, description):
-    FW.write('<br><font size="2.5em">' + description + "</font>")
-    #FW.write('<p class="a">' +   description  + '</p>')
+    FW.write('<font size="2.5em">' + description + "</font>")
 
 def writeColumn(FW, reader, isCitations):
         line = next(reader)
@@ -114,7 +113,7 @@ def writeColumn(FW, reader, isCitations):
             
         FW.write('<div class="column">')
         FW.write('<div class="flex-wrap-subjects"><img src="'+ imageColorFile+ '">')
-        FW.write('<p class="b"><b><font color="#cc0000">' + subject + ' </font></b><br>')
+        FW.write('<p class="b"><b><font color="#cc0000">' + subject + ' </font></b>')
         writeDescription(FW, description)
         #FW.write('<p class="a">' + description) !puts in a new paragraph
         FW.write('<br>')
@@ -128,7 +127,7 @@ def writeSubjects():
     count = 0
     FH = open(conSubjectsFile)
     reader = csv.DictReader(FH)
-    filename = "PCSubjects.html"
+    filename = "play.html"
     FW= open(filename, "w+")
     writeStyle(FW)
     FW.write('</head><body>')
@@ -174,7 +173,8 @@ def writeSubjectFile(subject):
     descriptionIdx =7
     FW= open(filename, "w+")    
     writeStyle(FW)   
-    FW.write('</head><body><div>')
+    #FW.write('</head><body><div>')
+    FW.write('</head><body>')
     writeHeader(FW, subject) 
 
     from itertools import islice
@@ -194,39 +194,28 @@ def writeSubjectFile(subject):
             id = row[idIdx]
             
             #write out the row
-            conType = "full"
+            conType = "fullxxx"
             if conType == "full":  #need to fix css so that image does not center
-                FW.write('<div class="flex-wrap"><img src="'+ imageColorFile+ '">')
+                FW.write('<div class="flex-wrap">')
                 FW.write('<p class="b">')         
                 FW.write('<font color="grey"> ' + key + '</font> ')                     
                 FW.write('<font color="#cc0000"> <strong>' + heading + ' </strong></font>')  
-                FW.write('<font color="grey">' + date + ' </font>')             
-                writeDescription(FW, description)
-                FW.write('<br><br><a href=' + imageColorFile + '>' + 'View Enlarged</a> &nbsp;&nbsp;')
-                #FW.write('<br><br><a href=' + imageColorFile + '>' + 'View Enlarged</a>')
+                FW.write('<font color="grey">' + date + ' </font></p>')  
+                FW.write('<img src="'+ imageColorFile+ '">')
+                FW.write('<p class="a">' +   description  + '</p>')
+                FW.write('<a href=' + imageColorFile + '>' + 'View Enlarged</a>')
                 writeSourceLink(FW, source, id)
                 FW.write('</div>')
             else:
-                #FW.write('<div class="flex-wrap">')
-                #FW.write('<div><img src="'+ imageColorFile+ '"><div>')
-                #FW.write('<p class="b">')         
-                #FW.write('<font color="blue"> ' + key + '</font> ')                     
-                #FW.write('<font color="#cc0000"> <strong>' + heading + ' </strong></font>')  
-                #FW.write('<font color="grey">' + date + ' </font><br><br>')             
-                #writeDescription(FW, description)
-                #FW.write('<br><br><a href=' + imageColorFile + '>' + 'View Enlarged</a> #&nbsp;&nbsp;')
-                #writeSourceLink(FW, source, id)
-                #FW.write('</div
-                
                 FW.write('<div class="flex-wrap-media">')
-                FW.write('<div><img src="'+ imageColorFile+ '"><div>')
-                #FW.write('<p class="b">')         
-                #FW.write('<font color="blue"> ' + key + '</font> ')                     
-                #FW.write('<font color="#cc0000"> <strong>' + heading + ' </strong></font>')  
-                #FW.write('<font color="grey">' + date + ' </font><br><br>')             
-                #writeDescription(FW, description)
-                #FW.write('<br><br><a href=' + imageColorFile + '>' + 'View Enlarged</a> #&nbsp;&nbsp;')
-                #writeSourceLink(FW, source, id)
+                FW.write('<p class="b">')         
+                FW.write('<font color="grey"> ' + key + '</font> ')                     
+                FW.write('<font color="#cc0000"> <strong>' + heading + ' </strong></font>')  
+                FW.write('<font color="grey">' + date + ' </font></p>')  
+                FW.write('<img src="'+ imageColorFile+ '">')
+                FW.write('<p class="a">' +   description  + '</p>')
+                FW.write('<a href=' + imageColorFile + '>' + 'View Enlarged</a>')
+                writeSourceLink(FW, source, id)
                 FW.write('</div>')
         
                 
