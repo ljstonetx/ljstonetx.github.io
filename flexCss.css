@@ -45,7 +45,7 @@ body {
 
 #.flex-wrap {display: flex; flex-direction:column; justify-content: center; align-items: flex-start; gap: 5px; }
 
-.flex-wrap img {max-width: 30%; height: auto flex-shrink:0; object-fit: contain}
+.flex-wrap img {max-width: 60%; height: auto flex-shrink:0; object-fit: contain}
 #.flex-wrap img {max-width: 30%; height: auto;}
 
 .flex-wrap p {flex: 1;}
