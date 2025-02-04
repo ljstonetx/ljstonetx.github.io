@@ -84,9 +84,9 @@ def writeHeader(FW, subject):
     FW.write('<div id="flexHeader">')
     writeLongTitle(FW)
     FW.write('<div id="flexHeader">')
-    FW.write('<div><p1>Subject: '+ subject + '<p1></div>')
-    FW.write('<div2><p1><a href="PCSubjects.html" target="_blank">Home</a><p1></div2>')
-    FW.write('<div><p1>' + conEmailAddress + '<p1></div>')
+    FW.write('<div>Subject: '+ subject + '</div>')
+    FW.write('<div2><a href="PCSubjects.html" target="_blank">Home</a></div2>')
+    FW.write('<div>' + conEmailAddress + '</div>')
     FW.write('</div>')
 
 def writeCitations(FW):
@@ -94,8 +94,7 @@ def writeCitations(FW):
     
 
 def writeDescription(FW, description):
-    #FW.write('<font size="2.5em">' + description + "</font>")
-    FW.write('<br><p1>' +   description  + '</p1>')
+    FW.write('<font size="2.5em">' + description + "</font>")
 
 def writeColumn(FW, reader, isCitations):
         line = next(reader)
@@ -194,11 +193,10 @@ def writeSubjectFile(subject):
             conType = "full"
             if conType == "full":
                 FW.write('<div class="flex-wrap"><img src="'+ imageColorFile+ '">')
-                #FW.write('<p class="b">')
-                FW.write('<p1>')                     
+                FW.write('<p class="b">')         
                 FW.write('<font color="grey"> ' + key + '</font> ')                     
                 FW.write('<font color="#cc0000"> <strong>' + heading + ' </strong></font>')  
-                FW.write('<font color="grey">' + date + ' </font>')             
+                FW.write('<font color="grey">' + date + ' </font><br><br>')             
                 writeDescription(FW, description)
                 FW.write('<br><br><a href=' + imageColorFile + '>' + 'View Enlarged</a> &nbsp;&nbsp;')
                 writeSourceLink(FW, source, id)
