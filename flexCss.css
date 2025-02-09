@@ -44,8 +44,10 @@ body {
 
 @media only screen and (max-width: 600px) {
 .flex-wrap 
-	{display: flex; flex-direction:column; justify-content: center; align-items: center; gap: 5px }
-p1 {
+	{ 
+	flex-direction:column; 
+	gap: 5px; }
+p1  {
 	font-size:0.80rem;
 	}
 p2 
@@ -56,11 +58,14 @@ h1
 	{
 	font-size:1.0rem;
 	}
-
+.flex-wrap img 
+		{max-width: 100%; height: auto; }
 }
 
+
+
 .flex-wrap {display: flex; align-items: flex-start; gap: 15px;}
-.flex-wrap img {max-width: 30%; height: auto; }
+.flex-wrap img {max-width: 50%; height: auto; } !max-width refers to %of screen the image occupies
 .flex-wrap p {flex: 1;}
 .flex-wrap-subjects {display: flex; align-items: flex-start; gap: 15px; }
 .flex-wrap-subjects img {max-width: 25%; height: auto; }
@@ -68,6 +73,7 @@ h1
 .row	{display: flex; flex-direction: row;flex-wrap: wrap;width: 100%;}
 .column {display: flex;flex-direction: column;ex-basis: 100%;flex: 1;!background-color: Ivory;!height: 100px;}
 p1 {font-family: "Arial Light", Helvetic, sans-serif;}
+p2 {font-family: "Arial Light", Helvetic, sans-serif;}
 p.a {font-family: "Times New Roman", Times, serif;}
 p.b {font-family: "Arial Light", Helvetic, sans-serif;}
 a:link, 

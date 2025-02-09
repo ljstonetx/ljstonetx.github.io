@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {background-color: powderblue;}
+    .container {
+      width: 88%;
+      margin: 50px auto;
+      margin-top: 0px;
+    }
+
+    .heading {
+      text-align: center;
+      font-size: 30px;
+      margin-bottom: 50px;
+    }
+
+    .row {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      flex-flow: wrap;
+    }
+
+    .card {
+      width: 30%;
+      background: #fff;
+      border: 1px solid #ccc;
+      margin-bottom: 50px;
+    }
+
+    .image {
+      width: fit-content;
+      height: fit-content;
+    }
+
+    .card-body {
+      padding: 30px 10px;
+      text-align: left;
+      font-size: 18px;
+    }
+
+    .card-body .btn {
+      display: block;
+      color: #fff;
+      text-align: center;
+      background: black;
+      margin-top: 30px;
+      text-decoration: none;
+      padding: 10px 5px;
+    }
+
+    img {
+      object-fit: contain;
+      width: 100%;
+    }
+
+    @media screen and (max-width: 1000px) {
+      .card {
+        width: 40%;
+      }
+      .heading {
+        text-align: auto;
+      }
+      .card-header {
+        margin: auto;
+      }
+    }
+
+    @media screen and (max-width: 620px) {
+      .container {
+        width: 100%;
+      }
+      .heading {
+        padding: 20px;
+        font-size: 20px;
+        text-align: auto;
+      }
+      .card {
+        width: 80%;
+      }
+    }
+</style>
+</head>
+<body>
+<!-- language: lang-html -->
+<body
+    <div class="container">
+      <div class="heading">
+        <h1>Latest Posts</h1>
+      </div>
+      <div class="row">
+        <div class="card">
+          <div class="image">
+            <img src="imagesColorized/A001.jpg">
+          </div>
+          <div class="card-body">
+            <p>
+              Text Here
+            </p>
+            <a href="test.html" class="btn">Read more</a>
+          </div>
+        </div>
+</body>
+</html>
