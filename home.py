@@ -76,9 +76,12 @@ def writeHomeHeader(FW):
     FW.write('<div id="flexHeader">')  
     
     FW.write('<div>These photographs capture the early history of Mercedes, Texas. In the early 1900s, the city and the Lower Rio Grande Valley underwent a dramatic transformation, shifting from traditional ranching to commercial agriculture. This transition set the stage for unprecedented growth, marking an exciting yet challenging era in the regions development. During this time, irrigation and canal systems were established in Mercedes</div>')
-    FW.write('<div2> Contact us if you have photographs or images to share on this website ' + conEmailAddress+ '.</div2>')
+    FW.write('</div><div id="flexHeader">')
+    FW.write('<div2> Contact us if you have photographs or images to share on this website ' + conEmailAddress+ '.</div2></div>')
+    FW.write('</div><div id="flexHeader">')
     FW.write('<div> The town built its own power plant. Mercedes was first in the Valley to have electric lights. Mercedes also served as the site of military camps during both the Border War and World War I. Do you have historical photographs from this period that you would like to share? We would be thrilled to add them to this website. Please reach out to us at ' + conEmailAddress+ '. Thank you for your interest in sharing the history of Mercedes</div>')
-    FW.write('</div>')  
+    FW.write('</div>')
+    FW.write('</div>')     
 
 def writeHeader(FW, subject):
     FW.write('<div id="flexHeader">')
@@ -111,12 +114,12 @@ def writeColumn(FW, reader, isCitations):
             
         FW.write('<div class="column">')
         FW.write('<div class="flex-wrap-subjects"><img src="'+ imageColorFile+ '">')
-        FW.write('<p class="b"><b><font color="#cc0000">' + subject + ' </font></b><br>')
+        FW.write('<div><p class="b"><b><font color="#cc0000">' + subject + ' </font></b><br>')
         writeDescription(FW, description)
         #FW.write('<p class="a">' + description) !puts in a new paragraph
         FW.write('<br>')
         FW.write('<a href=' + htmlName + '>' + 'View Photos</a>')        
-        FW.write('</div></div>')
+        FW.write('</div></div></div>')
         return subject
 
 def writeSubjects():
@@ -136,6 +139,7 @@ def writeSubjects():
         FW.write('<div class="row">')
         subject = writeColumn(FW, reader, 0)
         writeSubjectFile(subject)
+      
         if count < conNumSubjects-1:
             #start column 2
             subject = writeColumn(FW, reader,0)
@@ -153,64 +157,45 @@ def writeSubjects():
     count+=1
     FH.close() 
     FW.close()
-
-def writeSubjectFile(subject):
- 
-    filename = makeHtmlSubjectFilename(subject);
-    #This file was created by exporting the postcards table from wix, then editing to remove single quotes, 
-    #then editing it in Open Office Calc to sort on the score column
     
+
+def writeSubjectsNew():
+ 
+#https://dev.to/drews256/ridiculously-easy-row-and-column-layouts-with-flexbox-1k01
     count=0
-    keyIdx = 0
-    smuIdx = 1
-    idIdx=2    
-    scoreIdx =3
-    headingIdx =4
-    subjectIdx =5
-    dateIdx =6
-    descriptionIdx =7
+    keyIdx = 2
+    subjectIdx =0
+    filename = "PCSubjects.html"
+    descriptionIdx =4
     FW= open(filename, "w+")    
     writeStyle(FW)   
     FW.write('</head><body><div>')
-    writeHeader(FW, subject) 
+    writeHomeHeader(FW) 
 
     from itertools import islice
-    with open(conPostCardFile) as csvfile:
+    with open(conSubjectsFile) as csvfile:
         reader1 = csv.reader(csvfile)       
-        for row in islice(reader1, conNumCards): 
+        for line in islice(reader1, conNumSubjects): 
            
-            if row[subjectIdx] != subject: continue
-            if row[scoreIdx] == "0": continue
-            count = count + 1
-            key = row[keyIdx]
-            date = row[dateIdx]
-            imageColorFile = makeColorFileName(key)   
-            description = row[descriptionIdx]
-            heading = row[headingIdx]
-            source = row[smuIdx]
-            id = row[idIdx]
-            
-            #write out the row
-            conType = "full"
-            if conType == "full":
-                FW.write('<div class="flex-wrap"><img src="'+ imageColorFile+ '">')
-                #FW.write('<p class="b">')
-                FW.write('<p1>')                     
-                FW.write('<font color="grey"> ' + key + '</font> ')                     
-                FW.write('<font color="#cc0000"> <strong>' + heading + ' </strong></font>')  
-                FW.write('<font color="grey">' + date + ' </font>')             
-                writeDescription(FW, description)
-                FW.write('<br><br><a href=' + imageColorFile + '>' + 'View Enlarged</a> &nbsp;&nbsp;')
-                writeSourceLink(FW, source, id)
-                FW.write('</div>')
-            
-            
-            
-            
+           subject = line[subjectIdx]
+           key = line[keyIdx] 
+           description = line[descriptionIdx]
+           imageColorFile = makeColorFileName(key)
+           if subject == "subject": continue
+           
+           count = count + 1
+           FW.write('<div class="flex-wrap"><img src="'+ imageColorFile+ '">')
+           FW.write('<p1>')                    
+           FW.write('<font color="#cc0000"> <strong>' + subject + ' </strong></font>')
+           writeDescription(FW, description)
+           htmlName= makeHtmlSubjectFilename(subject);
+           FW.write('<br><br><a href=' + htmlName + '>' + 'View Photos</a>') 
+           FW.write('</div>')
+           #writeSubjectFile(subject) 
             
         writeHeader(FW,subject) 
         FW.write('</body></html>')
 
-writeSubjects()
+writeSubjectsNew()
 
 #check this out https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-flexbox-tricks

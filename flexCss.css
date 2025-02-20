@@ -65,7 +65,9 @@ h1
 
 
 .flex-wrap {display: flex; align-items: flex-start; gap: 15px;}
-.flex-wrap img {max-width: 50%; height: auto; } !max-width refers to %of screen the image occupies
+.flex-wrap img {width: auto; max-height: 250px; margin: 0 auto 1em;}
+#.flex-wrap img {max-width: 100%; max-height: 100%;} 
+#.flex-wrap img {max-width: 50%; height: auto; } !max-width refers to %of screen the image occupies
 .flex-wrap p {flex: 1;}
 .flex-wrap-subjects {display: flex; align-items: flex-start; gap: 15px; }
 .flex-wrap-subjects img {max-width: 25%; height: auto; }

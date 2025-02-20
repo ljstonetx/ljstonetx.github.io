@@ -75,16 +75,19 @@ def writeHomeHeader(FW):
     writeLongTitle(FW)
     FW.write('<div id="flexHeader">')  
     
-    FW.write('<div>These photographs capture the early history of Mercedes, Texas. In the early 1900s, the city and the Lower Rio Grande Valley underwent a dramatic transformation, shifting from traditional ranching to commercial agriculture. This transition set the stage for unprecedented growth, marking an exciting yet challenging era in the regions development. During this time, irrigation and canal systems were established in Mercedes</div>')
-    FW.write('<div2> Contact us if you have photographs or images to share on this website ' + conEmailAddress+ '.</div2>')
-    FW.write('<div> The town built its own power plant. Mercedes was first in the Valley to have electric lights. Mercedes also served as the site of military camps during both the Border War and World War I. Do you have historical photographs from this period that you would like to share? We would be thrilled to add them to this website. Please reach out to us at ' + conEmailAddress+ '. Thank you for your interest in sharing the history of Mercedes</div>')
-    FW.write('</div>')  
+    FW.write('<div><p1>These photographs capture the early history of Mercedes, Texas. In the early 1900s, the city and the Lower Rio Grande Valley underwent a dramatic transformation, shifting from traditional ranching to commercial agriculture. This transition set the stage for unprecedented growth, marking an exciting yet challenging era in the regions development. During this time, irrigation and canal systems were established in Mercedes</div><p1>')
+    FW.write('</div><div id="flexHeader">')
+    FW.write('<div2><p1>Contact us if you have photographs or images to share on this website ' + conEmailAddress+ '.</p1></div2></div>')
+    FW.write('</div><div id="flexHeader">')
+    FW.write('<div><p1> The town built its own power plant. Mercedes was first in the Valley to have electric lights. Mercedes also served as the site of military camps during both the Border War and World War I. Do you have historical photographs from this period that you would like to share? We would be thrilled to add them to this website. Please reach out to us at ' + conEmailAddress+ '. Thank you for your interest in sharing the history of Mercedes</p1></div>')
+    FW.write('</div>')
+    FW.write('</div>')     
 
 def writeHeader(FW, subject):
     FW.write('<div id="flexHeader">')
     writeLongTitle(FW)
     FW.write('<div id="flexHeader">')
-    FW.write('<div><p1>Subject: '+ subject + '<p1></div>')
+    FW.write('<div><p1>' +subject + '<p1></div>')
     FW.write('<div2><p1><a href="PCSubjects.html" target="_blank">Home</a><p1></div2>')
     FW.write('<div><p1>' + conEmailAddress + '<p1></div>')
     FW.write('</div>')
@@ -119,7 +122,7 @@ def writeColumn(FW, reader, isCitations):
         FW.write('</div></div>')
         return subject
 
-def writeSubjects():
+def writeSubjectsOld():
     
     #https://dev.to/drews256/ridiculously-easy-row-and-column-layouts-with-flexbox-1k01
     count = 0
@@ -153,7 +156,44 @@ def writeSubjects():
     count+=1
     FH.close() 
     FW.close()
+    
+def writeSubjectsNew():
+ 
+#https://dev.to/drews256/ridiculously-easy-row-and-column-layouts-with-flexbox-1k01
+    count=0
+    keyIdx = 2
+    subjectIdx =0
+    filename = "PCSubjects.html"
+    descriptionIdx =4
+    FW= open(filename, "w+")    
+    writeStyle(FW)   
+    FW.write('</head><body><div>')
+    writeHomeHeader(FW) 
 
+    from itertools import islice
+    with open(conSubjectsFile) as csvfile:
+        reader1 = csv.reader(csvfile)       
+        for line in islice(reader1, conNumSubjects): 
+           
+           subject = line[subjectIdx]
+           key = line[keyIdx] 
+           description = line[descriptionIdx]
+           imageColorFile = makeColorFileName(key)
+           if subject == "subject": continue
+           
+           count = count + 1
+           FW.write('<div class="flex-wrap"><img src="'+ imageColorFile+ '">')
+           FW.write('<p1>')                    
+           FW.write('<font color="#cc0000"> <strong>' + subject + ' </strong></font>')
+           writeDescription(FW, description)
+           htmlName= makeHtmlSubjectFilename(subject);
+           FW.write('<br><br><a href=' + htmlName + '>' + 'View Photos</a>') 
+           FW.write('</div>')
+           writeSubjectFile(subject) 
+            
+        writeHeader(FW,subject) 
+        FW.write('</body></html>')
+        
 def writeSubjectFile(subject):
  
     filename = makeHtmlSubjectFilename(subject);
@@ -203,14 +243,9 @@ def writeSubjectFile(subject):
                 FW.write('<br><br><a href=' + imageColorFile + '>' + 'View Enlarged</a> &nbsp;&nbsp;')
                 writeSourceLink(FW, source, id)
                 FW.write('</div>')
-            
-            
-            
-            
-            
         writeHeader(FW,subject) 
         FW.write('</body></html>')
 
-writeSubjects()
+writeSubjectsNew()
 
 #check this out https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-flexbox-tricks
