@@ -26,7 +26,7 @@ conSiteShortTitle = "Mercedes Historic Photograps"
 conSiteLongTitle = "Mercedes Texas Historic Photographs 1900s to 1950s"
 conEmailAddress = "mercedestx@gmail.com"
 conNumCards=195
-conNumSubjects=17
+conNumSubjects=21
 conPostCardFile='PostcardSorted.csv'
 conSubjectsFile='postcardViewsSorted.csv'
 conHistoryFile='History.csv'
@@ -72,9 +72,15 @@ def writeStyle(FW):
     FW.write('<title>' + conSiteShortTitle + '</title>')
     FW.write('<link rel="stylesheet" href="flexCss.css">')
 
-def writeLongTitle(FW):
-    FW.write('<h1><center>' + conSiteLongTitle + '</center></div></h1>')
-
+def writeLongTitle(FW,subject, heading):
+    #FW.write('<h1>' + conSiteLongTitle + '</h1></div>')
+    FW.write('<h1>' + heading + '</h1></div>')   
+    
+    
+    #FW.write('<h1>' + heading          + '</div></h1>')
+    #FW.write('<center><h2><strong><font color="#cc0000"> ' + heading + '</font></strong> </h2> </center></div>')
+    #FW.write('<h1><center>' + heading + '</center></div></h1>')
+     
 def makeColorFileName(key):
     return conColorFileDir + key + ".jpg" 
 
@@ -84,7 +90,7 @@ def makeHistoryFileName(key):
 def writeHomeHeader(FW):
 
     FW.write('<div id="flexHeader">')
-    writeLongTitle(FW)
+    writeLongTitle(FW,"", "")
     FW.write('<div id="flexHeader">')  
     
     FW.write('<div><p1>These photographs capture the early history of Mercedes, Texas. In the early 1900s, the city and the Lower Rio Grande Valley underwent a dramatic transformation, shifting from traditional ranching to commercial agriculture. This transition set the stage for unprecedented growth, marking an exciting yet challenging era in the regions development. During this time, irrigation and canal systems were established in Mercedes</div><p1>')
@@ -95,13 +101,11 @@ def writeHomeHeader(FW):
     FW.write('</div>')
     FW.write('</div>')     
 
-def writeHeader(FW, subject):
+def writeHeader(FW, subject, heading):
     FW.write('<div id="flexHeader">')
-    writeLongTitle(FW)
+    writeLongTitle(FW, subject, heading)
     FW.write('<div id="flexHeader">')
-    FW.write('<div><p1>' +subject + '<p1></div>')
     FW.write('<div2><p1><a href="PCSubjects.html" target="_blank">Home</a><p1></div2>')
-    FW.write('<div><p1>' + conEmailAddress + '<p1></div>')
     FW.write('</div>')
 
 def writeCitations(FW):
@@ -121,7 +125,8 @@ def writeSubjects():
     keyIdx = 2
     subjectIdx =0
     filename = "PCSubjects.html"
-    descriptionIdx =4
+    descriptionIdx =3
+    headingIdx=4
     FW= open(filename, "w+")    
     writeStyle(FW)   
     FW.write('</head><body><div>')
@@ -135,6 +140,7 @@ def writeSubjects():
            subject = line[subjectIdx]
            key = line[keyIdx] 
            description = line[descriptionIdx]
+           heading = line[headingIdx]
            imageFile = makeColorFileName(key)
            if subject == "subject": continue
            
@@ -142,17 +148,20 @@ def writeSubjects():
            #FW.write('<div class="flex-wrap"><img src="'+ imageFile+ '">')
            writeImage(FW, imageFile)
            FW.write('<p1>')                    
-           FW.write('<font color="#cc0000"> <strong>' + subject + ' </strong></font>')
+           FW.write('<font color="#cc0000"> <strong>' + heading + ' </strong></font>')
            writeDescription(FW, description)
            htmlName= makeHtmlSubjectFilename(subject);
-           FW.write('<br><br><a href=' + htmlName + '>' + 'View Photos</a>') 
+           FW.write('<br><br><a href=' + htmlName + '>' + 'View '+ subject + '</a>') 
            FW.write('</div>')
-           writeSubjectFile(subject) 
+           if (count > 3): writeSubjectFile(subject, heading)
+           if (count <= 3): writeHxSubjectFile(subject, heading) 
+           print(subject) 
+           print(count)           
             
-        writeHeader(FW,subject) 
+        writeHomeHeader(FW) 
         FW.write('</body></html>')
         
-def writeSubjectFile(subject):
+def writeSubjectFile(subject, heading):
  
     filename = makeHtmlSubjectFilename(subject);
     #This file was created by exporting the postcards table from wix, then editing to remove single quotes, 
@@ -170,7 +179,7 @@ def writeSubjectFile(subject):
     FW= open(filename, "w+")    
     writeStyle(FW)   
     FW.write('</head><body><div>')
-    writeHeader(FW, subject) 
+    writeHeader(FW, subject, heading ) 
 
     from itertools import islice
     with open(conPostCardFile) as csvfile:
@@ -190,12 +199,12 @@ def writeSubjectFile(subject):
             writeSourceLink(FW, row[sourceIdx], row[idIdx])
             FW.write('</div>')
                 
-        writeHeader(FW,subject) 
+        writeHeader(FW,subject, heading) 
         FW.write('</body></html>')
         
-def writeHxSubjectFile(FW, subject):
+def writeHxSubjectFile(subject, heading):
  #"Title","topic","imagePic","citationText","citationDate","summary","citationLink"
-    
+    filename = makeHtmlSubjectFilename(subject);  
     count=0
     titleIdx = 0
     
@@ -205,8 +214,10 @@ def writeHxSubjectFile(FW, subject):
     dateIdx = citationTextIdx+1
     summaryIdx = dateIdx+1
     citationLinkIdx = summaryIdx+1
-
- 
+    FW= open(filename, "w+")    
+    writeStyle(FW)   
+    FW.write('</head><body><div>')
+    writeHeader(FW,subject, heading ) 
 
     from itertools import islice
     with open(conHistoryFile) as csvfile:
@@ -236,7 +247,9 @@ def writeHxSubjectFile(FW, subject):
             #FW.write('<br><br><a href=' + citationText + '>' + 'View Article</a> &nbsp;&nbsp;')
             #writeSourceLink(FW, sourceLink, id)
             FW.write('</div></div><br><br>')
-        
+        writeHeader(FW,subject, heading ) 
+        FW.write('</body></html>')  
+            
 def writeHxSubjectTextFile(subject):
  #"Title","topic","imagePic","citationText","citationDate","summary","citationLink"
     filename = makeHtmlSubjectFilename(subject);
@@ -275,9 +288,9 @@ def writeHxSubjectTextFile(subject):
         writeHeader(FW,subject) 
         FW.write('</body></html>')
 
-writeHxSubjectTextFile("Colegio")
-writeHxSubjectTextFile("Fuste")
-writeHxSubjectTextFile("Rio Rico")
-#writeSubjects()
+#writeHxSubjectTextFile("Colegio")
+#writeHxSubjectTextFile("Fuste")
+#writeHxSubjectTextFile("Rio Rico")
+writeSubjects()
 
 #check this out https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-flexbox-tricks

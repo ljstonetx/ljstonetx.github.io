@@ -21,9 +21,18 @@ body {
   flex: 1 0 30%; 
   background-image: linear-gradient(#80D8DA,#AFEEEE);
   padding-top: 1.0em;
-  padding-left: 1.5em;
-  padding-right: 1.5em;
-  padding-bottom:1.5em;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-bottom:1em;
+}
+#flexHeader h2 {
+  flex: 1 0 20%; 
+  background-image: linear-gradient(#80D8DA,#AFEEEE);
+  padding-top: .5em;
+  padding-left: 1.0em;
+  padding-right: 1.0em;
+  padding-bottom:1.0Sem;
+  font-color:#cc0000"
 }
   
 #flexHeader div {
@@ -31,7 +40,7 @@ body {
   border-color: #FAD99D;
   border-width: 1px;
   border-style:solid;
-  background-image: linear-gradient(#D3B683,#FFFFF0);
+  #background-image: linear-gradient(#D3B683,#FFFFF0);
   padding-top: 1.0em;
   padding-left: 1.5em;
   padding-right: 1.5em;
