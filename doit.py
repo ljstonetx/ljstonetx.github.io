@@ -23,7 +23,7 @@
 import csv
 
 conSiteShortTitle = "Mercedes Historic Photograps"
-conSiteLongTitle = "Mercedes Texas Historic Photographs 1900s to 1950s"
+conSiteLongTitle = "Mercedes Texas 1900s to 1950s History and Images"
 conEmailAddress = "mercedestx@gmail.com"
 conNumCards=195
 conNumSubjects=21
@@ -34,7 +34,7 @@ conFileSubjects='index.html'
 conHistoryTextFile='historyText.csv'
 conColorFileDir = 'imagesColorized/'
 conCitationsTitle = "Citations for Mercedes History Information" 
-conCitationsFile = "PChtmlCitations.html" 
+conCitationsFile = "Citations.pdf" 
 conSMULink         = 'https://digitalcollections.smu.edu/digital/collection/tex/id/'
 conUTRGVStudioLink = 'https://scholarworks.utrgv.edu/rgvstudio/' 
 conUTRGVMiscLink   = 'https://scholarworks.utrgv.edu/miscphotosedinburg/' 
@@ -50,9 +50,6 @@ def makeHtmlSubjectFilename(category):
     return "PChtml" + catNoSpace + ".html"
 
 def writeSourceLink(FW, imageSource, imageId):
-    
-
-    
     if imageSource == conSMU:
         FW.write('<a href=' + conSMULink + imageId        + '/>View High Resolution</a>')
     elif imageSource == conUTRGVSTUDIO: 
@@ -71,11 +68,21 @@ def writeStyle(FW):
     FW.write('<title>' + conSiteShortTitle + '</title>')
     FW.write('<link rel="stylesheet" href="flexCss.css">')
 
-def writeLongTitle(FW,subject, heading):
+def writeShortTitle(FW, heading):
 
-    FW.write('<p2>' + heading )    
-    FW.write('<center><a href=' + conFileSubjects + ' target="_blank">Home</a>'+ '<center></p2></div>')
+    FW.write('<p2>' + heading +'</p2></div>')    
      
+
+def writeLongTitle(FW, heading):
+
+    FW.write('<p2>' + heading + '<br><a href=' + conFileSubjects + ' class="button" target="_blank">Home</a>'+ '</p2></div>')
+     
+def writeTitle(FW, title):
+    FW.write('<p1><div><font color="#cc0000"> <strong>' + title + ' </strong></font>') 
+    
+def writeTitle2(FW, title):
+    FW.write('<font color="#cc0000"> <strong>' + title + ' </strong></font>')
+
 def makeColorFileName(key):
     return conColorFileDir + key + ".jpg" 
 
@@ -85,37 +92,34 @@ def makeHistoryFileName(key):
 def writeHomeHeader(FW):
 
     FW.write('<div id="flexHeader">')
-    writeLongTitle(FW,"", conSiteLongTitle)
+    writeShortTitle(FW,conSiteLongTitle)
     FW.write('<div id="flexHeader">')  
     
-    FW.write('<div><p1>These photographs capture the early history of Mercedes, Texas. In the early 1900s, the city and the Lower Rio Grande Valley underwent a dramatic transformation, shifting from traditional ranching to commercial agriculture. This transition set the stage for unprecedented growth, marking an exciting yet challenging era in the regions development. During this time, irrigation and canal systems were established in Mercedes</div><p1>')
-    FW.write('</div><div id="flexHeader">')
-    FW.write('<div2><p1>Contact us if you have photographs or images to share on this website ' + conEmailAddress+ '.</p1></div2></div>')
-    FW.write('</div><div id="flexHeader">')
-    FW.write('<div><p1> The town built its own power plant. Mercedes was first in the Valley to have electric lights. Mercedes also served as the site of military camps during both the Border War and World War I. Do you have historical photographs from this period that you would like to share? We would be thrilled to add them to this website. Please reach out to us at ' + conEmailAddress+ '. Thank you for your interest in sharing the history of Mercedes</p1></div>')
-    FW.write('</div>')
-    FW.write('</div>')     
+    FW.write('<div><p1>These photographs offer a glimpse into the early history of Mercedes, Texas. In the early 1900s, both Mercedes and the Lower Rio Grande Valley experienced a profound transformation, transitioning from traditional ranching to thriving commercial agriculture. This shift laid the foundation for remarkable growth, marking a dynamic and challenging period in the regions development. The era is extensively documented, thanks in part to the widespread popularity of postcards. Most of the images featured here were sourced from these collectible postcards, which were a common medium at the time. The historical context provided has been gathered from a variety of sources, which can be explored further on the Citations page of this website.</div><p1>')
+    FW.write('</div>')    
 
 def writeHeader(FW, subject, heading):
     FW.write('<div id="flexHeader">')
-    writeLongTitle(FW, subject, heading)
+    writeLongTitle(FW, heading)
     FW.write('<div id="flexHeader">')
-    FW.write('</div>')
+    FW.write('</div><br>')
 
 def writeCitations(FW):
     FW.write('<div>View source citations:  <a href=' + conCitationsFile + '>' + 'View Citations </a></div>')
     
-def writeTitle(FW, title):
-    FW.write('<p1><div><font color="#cc0000"> <strong>' + title + ' </strong></font>')  
+
 def writeDate(FW, date):
-    FW.write('<font color="grey">' + date + ' </font>')     
+    FW.write('<font color="grey">' + date + ' </font>')                       
 
 def writeDescription(FW, description):
     FW.write('<br><br><p1>' +   description  + '</p1>')
 
 def writeImage(FW, imageFile):    
     FW.write('<div class="flex-wrap"><img src="'+ imageFile+ '">')
-    
+   
+def writeImageEnlarged(FW, imageFile):    
+    FW.write('<br><br><a href=' + imageFile + '>' + 'View Enlarged</a> &nbsp;&nbsp;')
+   
 def writeSubjects():
  
 #https://dev.to/drews256/ridiculously-easy-row-and-column-layouts-with-flexbox-1k01
@@ -143,16 +147,24 @@ def writeSubjects():
            
            count = count + 1
            writeImage(FW, imageFile)
-           FW.write('<p1>')                    
-           FW.write('<font color="#cc0000"> <strong>' + heading + ' </strong></font>')
+           FW.write('<p1>')
+           writeTitle2(FW, heading) 
            writeDescription(FW, description)
            htmlName= makeHtmlSubjectFilename(subject);
-           FW.write('<br><br><a href=' + htmlName + '>' + 'View '+ subject + '</a>') 
+           # the citations.pdf file was made by importing citations.csv into a google doc,
+           # formatting the number to number, wrapping the citation, and exporting to pdf
+           # and copying that file to the source code directory
+           if (subject == "Citations"): 
+               FW.write('<br><br><a href=' + conCitationsFile + '>' + 'View '+ subject + '</a>') 
+           else:  
+               FW.write('<br><br><a href=' + htmlName + '>' + 'View '+ subject + '</a>') 
            FW.write('</div>')
-           if (count > 3): writeSubjectFile(subject, heading)
-           if (count <= 3): writeHxSubjectFile(subject, heading) 
-           print(subject) 
-           print(count)           
+           
+           if (subject == "Fuste" or subject == "Colegio" or subject == "Rio Rico"): 
+            writeHxSubjectFile(subject, heading)
+           else: 
+               writeSubjectFile(subject, heading) 
+           print(subject)        
             
         writeHomeHeader(FW) 
         FW.write('</body></html>')
@@ -183,16 +195,15 @@ def writeSubjectFile(subject, heading):
         for row in islice(reader, conNumCards): 
             if row[subjectIdx] != subject: continue
             if row[scoreIdx] == "0": continue
-            count = count + 1
+            count += 1 
             imageFile = makeColorFileName(row[keyIdx])
             writeImage(FW,imageFile)
             FW.write('<p1>')                     
-            FW.write('<font color="grey"> ' + row[keyIdx] + '</font> ')                     
-            FW.write('<font color="#cc0000"> <strong>' + row[headingIdx] + ' </strong></font>')
-            #writeTitle(FW, row[headingIdx])
+            writeDate(FW, row[keyIdx])                    
+            writeTitle2(FW, row[headingIdx])
             writeDate(FW, row[dateIdx])   
             writeDescription(FW, row[descriptionIdx])
-            FW.write('<br><br><a href=' + imageFile + '>' + 'View Enlarged</a> &nbsp;&nbsp;')
+            writeImageEnlarged(FW,imageFile)
             writeSourceLink(FW, row[sourceIdx], row[idIdx])
             FW.write('</div>')
                 
@@ -221,7 +232,7 @@ def writeHxSubjectFile(subject, heading):
         reader = csv.reader(csvfile)       
         for row in islice(reader,47 ): 
             if row[subjectIdx] != subject: continue
-            count = count + 1
+            count += 1 
             title = row[titleIdx]
             date = row[dateIdx]
             imageFile = makeHistoryFileName(row[imagePicIdx])   
@@ -233,10 +244,8 @@ def writeHxSubjectFile(subject, heading):
             writeTitle(FW, title)
             writeDate(FW, date)            
             writeDescription(FW, summary)
-            FW.write('<br><br><a href=' + imageFile + '>' + 'View Enlarged</a> &nbsp;&nbsp;')
+            writeImageEnlarged(FW,imageFile)
             writeSourceLink(FW, conOTHER, citationLink)
-            #FW.write('<br><br><a href=' + citationText + '>' + 'View Article</a> &nbsp;&nbsp;')
-            #writeSourceLink(FW, sourceLink, id)
             FW.write('</div></div><br><br>')
         writeHeader(FW,subject, heading ) 
         FW.write('</body></html>')  
@@ -270,8 +279,7 @@ def writeHxSubjectTextFile(subject):
             imageFile = makeColorFileName(row[imagePicIdx])   
             summary = row[summaryIdx]
             writeImage(FW,imageFile)
-            FW.write('<p1>')                                        
-            FW.write('<div><font color="#cc0000"> <strong>' + title + ' </strong></font>')
+            writeTitle(FW, title)
             writeDescription(FW, summary)
             FW.write('</div></div>')
             writeHxSubjectFile(FW, subject)

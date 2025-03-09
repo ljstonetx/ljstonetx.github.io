@@ -88,18 +88,31 @@ img
 .flex-wrap-subjects p {flex: 1;}
 .row	{display: flex; flex-direction: row;flex-wrap: wrap;width: 100%;}
 .column {display: flex;flex-direction: column;ex-basis: 100%;flex: 1;!background-color: Ivory;!height: 100px;}
-p1 {font-family: "Arial Light", Helvetic, sans-serif;}
-p2 {font-family: "Arial Light", Helvetic, sans-serif;
-  
+p1 {font-family: Helvetic, sans-serif; }
+
+
+p2 {font-family: sans-serif;  
   background-image: linear-gradient(#80D8DA,#AFEEEE);
   padding-top: 1.0em;
-  padding-left: 1em;
-  padding-right: 1em;
-  padding-bottom:1em;}
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  padding-bottom:.5em;}
 p.a {font-family: "Times New Roman", Times, serif;}
 p.b {font-family: "Arial Light", Helvetic, sans-serif;}
 a:link, 
 a:visited {background-color: #80D8DA;color: black;padding: 10px;padding-left: 18px;padding-right: 18px;text-align: center;text-decoration: none;display: inline-block;border-radius:8px;}
 a:hover, 
 a:active {background-color: #52B2BF;color:white}
+.button {
+  font: bold .75em Arial;
+  !font: 2em;
+  text-decoration: none;
+  !background-color: #CCCCCC;
+  !color: #CCCCCC;
+  !padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #CCCCCC;
+  border-bottom: 1px solid #CCCCCC;
+  border-left: 1px solid #CCCCCC;
+}
 </style>
