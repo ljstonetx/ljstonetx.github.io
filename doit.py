@@ -26,7 +26,7 @@ conSiteShortTitle = "Mercedes Historic Photograps"
 conSiteLongTitle = "Mercedes Texas 1900s to 1950s History and Images"
 conEmailAddress = "mercedestx@gmail.com"
 conNumCards=195
-conNumSubjects=21
+conNumSubjects=22
 conPostCardFile='PostcardSorted.csv'
 conSubjectsFile='postcardViewsSorted.csv'
 conHistoryFile='History.csv'
@@ -51,13 +51,14 @@ def makeHtmlSubjectFilename(category):
 
 def writeSourceLink(FW, imageSource, imageId):
     if imageSource == conSMU:
-        FW.write('<a href=' + conSMULink + imageId        + '/>View High Resolution</a>')
+        FW.write('<a href=' + conSMULink +  imageId          + '/ class="button">View High Resolution</a>')
     elif imageSource == conUTRGVSTUDIO: 
-        FW.write('<a href=' + conUTRGVStudioLink + imageId   + '/>View UTRGV Studio</a>')
+        FW.write('<a href=' + conUTRGVStudioLink + imageId   + '/ class="button">View UTRGV Studio</a>')
     elif imageSource == conUTRGVMISC:
-        FW.write('<a href=' + conUTRGVMiscLink + imageId  + '/>View UTRGV Miscellaneous</a>')
+        FW.write('<a href=' + conUTRGVMiscLink + imageId     + '/ class="button">View UTRGV Miscellaneous</a>')
     elif imageSource == conOTHER:
-        FW.write('<a href=' + imageId  + '/>View Source Article</a>')
+        FW.write('<a href=' + imageId                        + '/ class="button">View Source Article</a>')
+    
 
 def writeStyle(FW):
     FW.write('<!DOCTYPE html>')
@@ -93,10 +94,10 @@ def writeHomeHeader(FW):
 
     FW.write('<div id="flexHeader">')
     writeShortTitle(FW,conSiteLongTitle)
-    FW.write('<div id="flexHeader">')  
+    FW.write('<br><div id="flexHeader">')  
     
     FW.write('<div><p1>These photographs offer a glimpse into the early history of Mercedes, Texas. In the early 1900s, both Mercedes and the Lower Rio Grande Valley experienced a profound transformation, transitioning from traditional ranching to thriving commercial agriculture. This shift laid the foundation for remarkable growth, marking a dynamic and challenging period in the regions development. The era is extensively documented, thanks in part to the widespread popularity of postcards. Most of the images featured here were sourced from these collectible postcards, which were a common medium at the time. The historical context provided has been gathered from a variety of sources, which can be explored further on the Citations page of this website.</div><p1>')
-    FW.write('</div>')    
+    FW.write('</div><br>')    
 
 def writeHeader(FW, subject, heading):
     FW.write('<div id="flexHeader">')
@@ -105,8 +106,9 @@ def writeHeader(FW, subject, heading):
     FW.write('</div><br>')
 
 def writeCitations(FW):
-    FW.write('<div>View source citations:  <a href=' + conCitationsFile + '>' + 'View Citations </a></div>')
-    
+    FW.write('<div>View source citations:  <a href=' + conCitationsFile + 'class="button">' + 'View Citations </a></div>')
+         #FW.write('<a href=' + conSMULink +  imageId          + '/ class="button">View High Resolution</a>')
+   
 
 def writeDate(FW, date):
     FW.write('<font color="grey">' + date + ' </font>')                       
@@ -118,8 +120,8 @@ def writeImage(FW, imageFile):
     FW.write('<div class="flex-wrap"><img src="'+ imageFile+ '">')
    
 def writeImageEnlarged(FW, imageFile):    
-    FW.write('<br><br><a href=' + imageFile + '>' + 'View Enlarged</a> &nbsp;&nbsp;')
-   
+    FW.write('<br><br><a href=' + imageFile + ' class="button">'                          + 'View Enlarged</a> &nbsp;&nbsp;')
+    #FW.write('<a href=' + conSMULink +  imageId          + '/ class="button">View High Resolution</a>')
 def writeSubjects():
  
 #https://dev.to/drews256/ridiculously-easy-row-and-column-layouts-with-flexbox-1k01
@@ -155,9 +157,11 @@ def writeSubjects():
            # formatting the number to number, wrapping the citation, and exporting to pdf
            # and copying that file to the source code directory
            if (subject == "Citations"): 
-               FW.write('<br><br><a href=' + conCitationsFile + '>' + 'View '+ subject + '</a>') 
+               FW.write('<br><br><a href=' + conCitationsFile + ' class="button">' + 'View '+ subject + '</a>') 
            else:  
-               FW.write('<br><br><a href=' + htmlName + '>' + 'View '+ subject + '</a>') 
+               FW.write('<br><br><a href=' + htmlName         + ' class="button">' + 'View '+ subject + '</a>') 
+              #FW.write('<a href='         + conSMULink +  imageId          + '/ class="button">View High Resolution</a>')
+
            FW.write('</div>')
            
            if (subject == "Fuste" or subject == "Colegio" or subject == "Rio Rico"): 
@@ -169,7 +173,7 @@ def writeSubjects():
         writeHomeHeader(FW) 
         FW.write('</body></html>')
         
-def writeSubjectFile(subject, heading):
+def writeSubjectFile(subject, heading): 
  
     filename = makeHtmlSubjectFilename(subject);
     #This file was created by exporting the postcards table from wix, then editing to remove single quotes, 
