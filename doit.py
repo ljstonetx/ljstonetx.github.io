@@ -14,11 +14,7 @@
 #4.go to ljstone.github.io. Go to Pages, Settings, domains. 
 #add custom domain mercedestx.com
 #
-#change log
-#12/20/2024 Fixed missing cards: A110 and 0102 had to be copied from "additonal" directory to imagesColorized
-#12/20/2024 Had to edit the postcards csv file to remove "copy" form the key for "A110". Not sure hSow it get there
-#
-#TODO Update github repository
+#https://dev.to/drews256/ridiculously-easy-row-and-column-layouts-with-flexbox-1k01
 
 import csv
 
@@ -26,7 +22,9 @@ conSiteShortTitle = "Mercedes Historic Photograps"
 conSiteLongTitle = "Mercedes Texas 1900s to 1950s History and Images"
 conEmailAddress = "mercedestx@gmail.com"
 conNumCards=195
-conNumSubjects=22
+conNumHxRows=47
+conNumHxTopics=4
+conNumSubjects=22  #includes Citations in a kludge
 conPostCardFile='PostcardSorted.csv'
 conSubjectsFile='postcardViewsSorted.csv'
 conHistoryFile='History.csv'
@@ -43,22 +41,12 @@ conUTRGVSTUDIO = "UTRGVSTUDIO"
 conUTRGVMISC   = "UTRGVMISC"
 conOTHER       = "OTHER"
 
-
-
-def makeHtmlSubjectFilename(category):  
-    catNoSpace = category.replace(" ", "")
-    return "PChtml" + catNoSpace + ".html"
-
-def writeSourceLink(FW, imageSource, imageId):
-    if imageSource == conSMU:
-        FW.write('<a href=' + conSMULink +  imageId          + '/ class="button">View High Resolution</a>')
-    elif imageSource == conUTRGVSTUDIO: 
-        FW.write('<a href=' + conUTRGVStudioLink + imageId   + '/ class="button">View UTRGV Studio</a>')
-    elif imageSource == conUTRGVMISC:
-        FW.write('<a href=' + conUTRGVMiscLink + imageId     + '/ class="button">View UTRGV Miscellaneous</a>')
-    elif imageSource == conOTHER:
-        FW.write('<a href=' + imageId                        + '/ class="button">View Source Article</a>')
+def makeHtmlSubjectFilename(subject):  
     
+    if (subject == "Citations"): 
+        return conCitationsFile
+    catNoSpace = subject.replace(" ", "")
+    return "PChtml" + catNoSpace + ".html"
 
 def writeStyle(FW):
     FW.write('<!DOCTYPE html>')
@@ -69,17 +57,18 @@ def writeStyle(FW):
     FW.write('<title>' + conSiteShortTitle + '</title>')
     FW.write('<link rel="stylesheet" href="flexCss.css">')
 
-def writeShortTitle(FW, heading):
+def writeShortHeading(FW, heading):
 
-    FW.write('<p2>' + heading +'</p2></div>')    
+    FW.write('<p2>' + heading +'<br></p2></div>')    
      
 
-def writeLongTitle(FW, heading):
+def writeLongHeading(FW, heading):
 
-    FW.write('<p2>' + heading + '<br><a href=' + conFileSubjects + ' class="button" target="_blank">Home</a>'+ '</p2></div>')
+    FW.write('<p2>' + heading + '<br><br><a href=' + conFileSubjects + ' class="button" target="_blank">Home</a>'+ '</p2></div>')
      
 def writeTitle(FW, title):
-    FW.write('<p1><div><font color="#cc0000"> <strong>' + title + ' </strong></font>') 
+    FW.write('<p1><div>')
+    writeTitle2(FW, title)
     
 def writeTitle2(FW, title):
     FW.write('<font color="#cc0000"> <strong>' + title + ' </strong></font>')
@@ -93,15 +82,15 @@ def makeHistoryFileName(key):
 def writeHomeHeader(FW):
 
     FW.write('<div id="flexHeader">')
-    writeShortTitle(FW,conSiteLongTitle)
+    writeShortHeading(FW,conSiteLongTitle)
     FW.write('<br><div id="flexHeader">')  
     
-    FW.write('<div><p1>These photographs offer a glimpse into the early history of Mercedes, Texas. In the early 1900s, both Mercedes and the Lower Rio Grande Valley experienced a profound transformation, transitioning from traditional ranching to thriving commercial agriculture. This shift laid the foundation for remarkable growth, marking a dynamic and challenging period in the regions development. The era is extensively documented, thanks in part to the widespread popularity of postcards. Most of the images featured here were sourced from these collectible postcards, which were a common medium at the time. The historical context provided has been gathered from a variety of sources, which can be explored further on the Citations page of this website.</div><p1>')
+    FW.write('<div><p1>This website offer a glimpse into the early history of Mercedes, Texas. In the early 1900s, Mercedes and the Lower Rio Grande Valley underwent a transformative shift, moving from traditional ranching to commercial agriculture. This set the stage for significant growth and marked a dynamic period in the regional development. The era is well-documented, largely due to the popularity of postcards, which were popular during that time. The historical context provided on these pages is from various sources which can be explored further on the Citations page.</div><p1>')
     FW.write('</div><br>')    
 
 def writeHeader(FW, subject, heading):
     FW.write('<div id="flexHeader">')
-    writeLongTitle(FW, heading)
+    writeLongHeading(FW, heading)
     FW.write('<div id="flexHeader">')
     FW.write('</div><br>')
 
@@ -109,25 +98,35 @@ def writeCitations(FW):
     FW.write('<div>View source citations:  <a href=' + conCitationsFile + 'class="button">' + 'View Citations </a></div>')
          #FW.write('<a href=' + conSMULink +  imageId          + '/ class="button">View High Resolution</a>')
    
-
 def writeDate(FW, date):
-    FW.write('<font color="grey">' + date + ' </font>')                       
+    FW.write('<font color="#414141">' + date + ' </font>')                       
 
 def writeDescription(FW, description):
     FW.write('<br><br><p1>' +   description  + '</p1>')
 
 def writeImage(FW, imageFile):    
-    FW.write('<div class="flex-wrap"><img src="'+ imageFile+ '">')
+    FW.write('<div class="flex-wrap-subjects"><img src="'+ imageFile+ '">')
    
+   
+   
+def writeSourceLink(FW, imageSource, imageId):
+    if imageSource == conSMU:
+        FW.write('<a href=' + conSMULink +  imageId          + '/ class="button">View High Resolution</a>&nbsp;&nbsp;')
+    elif imageSource == conUTRGVSTUDIO: 
+        FW.write('<a href=' + conUTRGVStudioLink + imageId   + '/ class="button">View UTRGV Studio</a>&nbsp;&nbsp;')
+    elif imageSource == conUTRGVMISC:
+        FW.write('<a href=' + conUTRGVMiscLink + imageId     + '/ class="button">View UTRGV Miscellaneous</a>&nbsp;&nbsp;')
+    elif imageSource == conOTHER:
+        FW.write('<a href=' + imageId                        + '/ class="button">View Source Article</a>&nbsp;&nbsp;')
+    
 def writeImageEnlarged(FW, imageFile):    
-    FW.write('<br><br><a href=' + imageFile + ' class="button">'                          + 'View Enlarged</a> &nbsp;&nbsp;')
-    #FW.write('<a href=' + conSMULink +  imageId          + '/ class="button">View High Resolution</a>')
+    FW.write('<a href=' + imageFile + ' class="button">'                          + 'View Enlarged</a>')
+
+
 def writeSubjects():
- 
-#https://dev.to/drews256/ridiculously-easy-row-and-column-layouts-with-flexbox-1k01
-    count=0
-    keyIdx = 2
+
     subjectIdx =0
+    keyIdx = 2
     descriptionIdx =3
     headingIdx=4
     FW= open(conFileSubjects, "w+")    
@@ -144,42 +143,33 @@ def writeSubjects():
            key = line[keyIdx] 
            description = line[descriptionIdx]
            heading = line[headingIdx]
-           imageFile = makeColorFileName(key)
-           if subject == "subject": continue
-           
-           count = count + 1
-           writeImage(FW, imageFile)
-           FW.write('<p1>')
-           writeTitle2(FW, heading) 
-           writeDescription(FW, description)
-           htmlName= makeHtmlSubjectFilename(subject);
-           # the citations.pdf file was made by importing citations.csv into a google doc,
-           # formatting the number to number, wrapping the citation, and exporting to pdf
-           # and copying that file to the source code directory
-           if (subject == "Citations"): 
-               FW.write('<br><br><a href=' + conCitationsFile + ' class="button">' + 'View '+ subject + '</a>') 
-           else:  
-               FW.write('<br><br><a href=' + htmlName         + ' class="button">' + 'View '+ subject + '</a>') 
-              #FW.write('<a href='         + conSMULink +  imageId          + '/ class="button">View High Resolution</a>')
+           imageFile = makeColorFileName(line[keyIdx])
+           if subject != "subject": #skip first line
 
-           FW.write('</div>')
+               writeImage(FW, imageFile)
+               FW.write('<p1>')
+               writeTitle2(FW, heading) 
+               writeDescription(FW, description)
+               htmlName= makeHtmlSubjectFilename(subject);
+               FW.write('<br><br><a href=' + htmlName         + ' class="button">' + 'View '+ subject + '</a>')
+               FW.write('<br></div>')
+               
+               if (subject == "Fuste" or subject == "Colegio" or subject == "Rio Rico"): 
+                writeHxSubjectFile(subject, heading)
+               elif (subject != "Citations"):
+                    # Citations.pdf file was made by importing citations.csv into a google doc, format order as
+                    # number, wrapping the citation column, and exporting to pdf. Then copying file to source code directory               
+                   writeSubjectFile(subject, heading) 
+               print(subject)        
            
-           if (subject == "Fuste" or subject == "Colegio" or subject == "Rio Rico"): 
-            writeHxSubjectFile(subject, heading)
-           else: 
-               writeSubjectFile(subject, heading) 
-           print(subject)        
-            
-        writeHomeHeader(FW) 
+        writeHeader(FW, conSiteLongTitle, conSiteLongTitle)
         FW.write('</body></html>')
         
 def writeSubjectFile(subject, heading): 
  
     filename = makeHtmlSubjectFilename(subject);
-    #This file was created by exporting the postcards table from wix, then editing to remove single quotes, 
     #then editing it in Open Office Calc to sort on the score column
     
-    count=0
     keyIdx = 0
     sourceIdx = 1
     idIdx=2    
@@ -199,16 +189,18 @@ def writeSubjectFile(subject, heading):
         for row in islice(reader, conNumCards): 
             if row[subjectIdx] != subject: continue
             if row[scoreIdx] == "0": continue
-            count += 1 
             imageFile = makeColorFileName(row[keyIdx])
             writeImage(FW,imageFile)
             FW.write('<p1>')                     
             writeDate(FW, row[keyIdx])                    
             writeTitle2(FW, row[headingIdx])
-            writeDate(FW, row[dateIdx])   
+            writeDate(FW, row[dateIdx])
+           
             writeDescription(FW, row[descriptionIdx])
+            FW.write('<br><br>') 
+            writeSourceLink(FW, row[sourceIdx], row[idIdx]) 
             writeImageEnlarged(FW,imageFile)
-            writeSourceLink(FW, row[sourceIdx], row[idIdx])
+            FW.write('<br><br>') 
             FW.write('</div>')
                 
         writeHeader(FW,subject, heading) 
@@ -217,7 +209,6 @@ def writeSubjectFile(subject, heading):
 def writeHxSubjectFile(subject, heading):
  #"Title","topic","imagePic","citationText","citationDate","summary","citationLink"
     filename = makeHtmlSubjectFilename(subject);  
-    count=0
     titleIdx = 0
     
     subjectIdx = 1
@@ -234,9 +225,8 @@ def writeHxSubjectFile(subject, heading):
     from itertools import islice
     with open(conHistoryFile) as csvfile:
         reader = csv.reader(csvfile)       
-        for row in islice(reader,47 ): 
+        for row in islice(reader,conNumHxRows): 
             if row[subjectIdx] != subject: continue
-            count += 1 
             title = row[titleIdx]
             date = row[dateIdx]
             imageFile = makeHistoryFileName(row[imagePicIdx])   
@@ -255,12 +245,11 @@ def writeHxSubjectFile(subject, heading):
         FW.write('</body></html>')  
             
 def writeHxSubjectTextFile(subject):
- #"Title","topic","imagePic","citationText","citationDate","summary","citationLink"
+    #"Title","topic","imagePic","citationText","citationDate","summary","citationLink"
     filename = makeHtmlSubjectFilename(subject);
     #This file was created by exporting the postcards table from wix, then editing to remove single quotes, 
     #then editing it in Open Office Calc to sort on the score column
     #"heading","topic","description","image","imageHeader","score"
-    count=0
     titleIdx = 0   
     subjectIdx = 1
     summaryIdx = 2
@@ -275,19 +264,13 @@ def writeHxSubjectTextFile(subject):
     from itertools import islice
     with open(conHistoryTextFile) as csvfile:
         reader = csv.reader(csvfile)       
-        for row in islice(reader,4 ): 
-            if row[subjectIdx] != subject: continue
-            
-            count = count + 1           
-            title = row[titleIdx]
-            imageFile = makeColorFileName(row[imagePicIdx])   
-            summary = row[summaryIdx]
-            writeImage(FW,imageFile)
-            writeTitle(FW, title)
-            writeDescription(FW, summary)
+        for row in islice(reader,conNumHxTopics): 
+            if row[subjectIdx] != subject: continue         
+            writeImage(FW,makeColorFileName(row[imagePicIdx]))
+            writeTitle(FW, row[titleIdx])
+            writeDescription(FW, row[summaryIdx])
             FW.write('</div></div>')
             writeHxSubjectFile(FW, subject)
-                
         writeHeader(FW,subject) 
         FW.write('</body></html>')
 
