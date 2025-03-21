@@ -96,8 +96,7 @@ def writeHeader(FW, subject, heading):
 
 def writeCitations(FW):
     FW.write('<div>View source citations:  <a href=' + conCitationsFile + 'class="button">' + 'View Citations </a></div>')
-         #FW.write('<a href=' + conSMULink +  imageId          + '/ class="button">View High Resolution</a>')
-   
+
 def writeDate(FW, date):
     FW.write('<font color="#414141">' + date + ' </font>')                       
 
@@ -105,8 +104,9 @@ def writeDescription(FW, description):
     FW.write('<br><br><p1>' +   description  + '</p1>')
 
 def writeImage(FW, imageFile):    
-    FW.write('<div class="flex-wrap-subjects"><img src="'+ imageFile+ '">')
-   
+    #FW.write('<div class="flex-wrap-subjects"><img src="'+ imageFile+ '">')
+    FW.write('<div class="flex-wrap"><img src="'+ imageFile+ '">')
+  
    
    
 def writeSourceLink(FW, imageSource, imageId):
