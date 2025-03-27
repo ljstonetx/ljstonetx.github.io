@@ -56,6 +56,7 @@ def writeStyle(FW):
     FW.write('<meta name="viewport" content="width=device-width, initial-scale=1.0">')
     FW.write('<title>' + conSiteShortTitle + '</title>')
     FW.write('<link rel="stylesheet" href="flexCss.css">')
+    FW.write('</head><body><div>')
 
 def writeShortHeading(FW, heading):
 
@@ -83,7 +84,7 @@ def writeHomeHeader(FW):
 
     FW.write('<div id="flexHeader">')
     writeShortHeading(FW,conSiteLongTitle)
-    FW.write('<br><div id="flexHeader">')  
+    FW.write('<br>')  
     
     FW.write('<div><p1>This website offer a glimpse into the early history of Mercedes, Texas. In the early 1900s, Mercedes and the Lower Rio Grande Valley underwent a transformative shift, moving from traditional ranching to commercial agriculture. This set the stage for significant growth and marked a dynamic period in the regional development. The era is well-documented, largely due to the popularity of postcards, which were popular during that time. The historical context provided on these pages is from various sources which can be explored further on the Citations page.</div><p1>')
     FW.write('</div><br>')    
@@ -102,13 +103,12 @@ def writeDate(FW, date):
 
 def writeDescription(FW, description):
     FW.write('<br><br><p1>' +   description  + '</p1>')
+    FW.write('<br><br>')
 
-def writeImage(FW, imageFile):    
-    #FW.write('<div class="flex-wrap-subjects"><img src="'+ imageFile+ '">')
+def writeImage(FW, imageFile): 
     FW.write('<div class="flex-wrap"><img src="'+ imageFile+ '">')
-  
-   
-   
+
+
 def writeSourceLink(FW, imageSource, imageId):
     if imageSource == conSMU:
         FW.write('<a href=' + conSMULink +  imageId          + '/ class="button">View High Resolution</a>&nbsp;&nbsp;')
@@ -131,7 +131,7 @@ def writeSubjects():
     headingIdx=4
     FW= open(conFileSubjects, "w+")    
     writeStyle(FW)   
-    FW.write('</head><body><div>')
+
     writeHomeHeader(FW) 
 
     from itertools import islice
@@ -151,8 +151,8 @@ def writeSubjects():
                writeTitle2(FW, heading) 
                writeDescription(FW, description)
                htmlName= makeHtmlSubjectFilename(subject);
-               FW.write('<br><br><a href=' + htmlName         + ' class="button">' + 'View '+ subject + '</a>')
-               FW.write('<br></div>')
+               FW.write('<a href=' + htmlName         + ' class="button">' + 'View '+ subject + '</a>')
+               FW.write('</div><br>')
                
                if (subject == "Fuste" or subject == "Colegio" or subject == "Rio Rico"): 
                 writeHxSubjectFile(subject, heading)
@@ -180,7 +180,6 @@ def writeSubjectFile(subject, heading):
     descriptionIdx =7
     FW= open(filename, "w+")    
     writeStyle(FW)   
-    FW.write('</head><body><div>')
     writeHeader(FW, subject, heading ) 
 
     from itertools import islice
@@ -197,7 +196,7 @@ def writeSubjectFile(subject, heading):
             writeDate(FW, row[dateIdx])
            
             writeDescription(FW, row[descriptionIdx])
-            FW.write('<br><br>') 
+ 
             writeSourceLink(FW, row[sourceIdx], row[idIdx]) 
             writeImageEnlarged(FW,imageFile)
             FW.write('<br><br>') 
@@ -219,7 +218,6 @@ def writeHxSubjectFile(subject, heading):
     citationLinkIdx = summaryIdx+1
     FW= open(filename, "w+")    
     writeStyle(FW)   
-    FW.write('</head><body><div>')
     writeHeader(FW,subject, heading ) 
 
     from itertools import islice
@@ -237,7 +235,7 @@ def writeHxSubjectFile(subject, heading):
             writeImage(FW,imageFile)  
             writeTitle(FW, title)
             writeDate(FW, date)            
-            writeDescription(FW, summary)
+            writeDescription(FW, summary) 
             writeImageEnlarged(FW,imageFile)
             writeSourceLink(FW, conOTHER, citationLink)
             FW.write('</div></div><br><br>')

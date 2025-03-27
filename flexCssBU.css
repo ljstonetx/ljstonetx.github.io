@@ -62,9 +62,9 @@ h1
 .flex-wrap {display: flex; align-items: flex-start; gap: 15px;}
 .flex-wrap img {max-width: 30%; height: auto; }
 .flex-wrap p {flex: 1;}
-.flex-wrap-subjects {display: flex; align-items: flex-start; gap: 15px; }
-.flex-wrap-subjects img {max-width: 25%; height: auto; }
-.flex-wrap-subjects p {flex: 1;}
+#.flex-wrap-subjects {display: flex; align-items: flex-start; gap: 15px; }
+#.flex-wrap-subjects img {max-width: 25%; height: auto; }
+#.flex-wrap-subjects p {flex: 1;}
 .row	{display: flex; flex-direction: row;flex-wrap: wrap;width: 100%;}
 .column {display: flex;flex-direction: column;ex-basis: 100%;flex: 1;!background-color: Ivory;!height: 100px;}
 p1 {font-family: "Arial Light", Helvetic, sans-serif;}
@@ -75,3 +75,6 @@ a:visited {background-color: #80D8DA;color: black;padding: 10px;padding-left: 18
 a:hover, 
 a:active {background-color: #52B2BF;color:white}
 </style>
+
+
+
