@@ -24,7 +24,8 @@ body {
 .flex-wrap 
 	{
 	display: flex;
-	flex-direction:column; 
+	!flex-direction:column;
+	flex-wrap: wrap;	
 	gap: 5px; 
 	}
 	
@@ -37,9 +38,8 @@ p2
 	font-weight:bold;
 	}
 img 
-	!{max-width: 100%; height: auto; }
-	!{min-width: 0;  flex-shrink: 0 }
-	{width: 20px;}
+	{max-width: 100%; height: auto; }
+	!{width:50%; height: auto; }
 
 h1
 	{
@@ -48,7 +48,8 @@ h1
 }
 
 .flex-wrap {display: flex; align-items: flex-start; gap: 15px;}
-.flex-wrap img {width: auto; max-height: 250px; margin: 0 auto 1em;}
+!.flex-wrap img {width: auto; max-height: 250px; margin: 0 auto 1em;}
+.flex-wrap img {width: 50%; max-height: 250px; margin: 0 auto 1em;}
 .flex-wrap p {flex: 1;}
 p1 {
 font-family: Helvetic, sans-serif; 
