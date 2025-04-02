@@ -49,7 +49,7 @@ h1
 
 .flex-wrap {display: flex; align-items: flex-start; gap: 15px;}
 !.flex-wrap img {width: auto; max-height: 250px; margin: 0 auto 1em;}
-.flex-wrap img {width: 50%; max-height: 250px; margin: 0 auto 1em;}
+.flex-wrap img {width: 70%; max-height: 250px; margin: 0 auto 1em;}
 .flex-wrap p {flex: 1;}
 p1 {
 font-family: Helvetic, sans-serif; 
