@@ -117,10 +117,10 @@ def writeSourceLink(FW, imageSource, imageId):
     elif imageSource == conUTRGVMISC:
         FW.write('<a href=' + conUTRGVMiscLink + imageId     + '/ class="button">View UTRGV Miscellaneous</a>&nbsp;&nbsp;')
     elif imageSource == conOTHER:
-        FW.write('<a href=' + imageId                        + '/ class="button">View Source Article</a>&nbsp;&nbsp;')
+        FW.write('<a href=' + imageId                        + '/ class="button">View Source Article</a>')
     
 def writeImageEnlarged(FW, imageFile):    
-    FW.write('<a href=' + imageFile + ' class="button">'                          + 'View Enlarged</a>')
+    FW.write('<a href=' + imageFile + ' class="button">'                          + 'View Enlarged</a>&nbsp;&nbsp;')
 
 
 def writeSubjects():
