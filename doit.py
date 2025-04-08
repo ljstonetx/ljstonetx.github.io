@@ -16,6 +16,10 @@
 #
 #https://dev.to/drews256/ridiculously-easy-row-and-column-layouts-with-flexbox-1k01
 
+#todo: card rio rico gambling - view article not working:
+#infrastructure: U149, U149 need info, are these from UTRGV
+#UTRGV has a bunch of photos that I need to input
+
 import csv
 
 conSiteShortTitle = "Mercedes Historic Photograps"
@@ -35,11 +39,14 @@ conCitationsTitle = "Citations for Mercedes History Information"
 conCitationsFile = "Citations.pdf" 
 conSMULink         = 'https://digitalcollections.smu.edu/digital/collection/tex/id/'
 conUTRGVStudioLink = 'https://scholarworks.utrgv.edu/rgvstudio/' 
-conUTRGVMiscLink   = 'https://scholarworks.utrgv.edu/miscphotosedinburg/' 
+conUTRGVMiscLink   = 'https://scholarworks.utrgv.edu/miscphotosedinburg/'
+conUTRGVMiscLinkBrown   = 'https://scholarworks.utrgv.edu/miscphotosbrownsville/'  
 conSMU = "SMU"
 conUTRGVSTUDIO = "UTRGVSTUDIO"
 conUTRGVMISC   = "UTRGVMISC"
+conUTRGVMISCBROWN   = "UTRGVMISCBROWN"
 conOTHER       = "OTHER"
+conNONE       = "NONE"
 
 def makeHtmlSubjectFilename(subject):  
     
@@ -116,9 +123,15 @@ def writeSourceLink(FW, imageSource, imageId):
         FW.write('<a href=' + conUTRGVStudioLink + imageId   + '/ class="button">View UTRGV Studio</a>&nbsp;&nbsp;')
     elif imageSource == conUTRGVMISC:
         FW.write('<a href=' + conUTRGVMiscLink + imageId     + '/ class="button">View UTRGV Miscellaneous</a>&nbsp;&nbsp;')
+    elif imageSource == conUTRGVMISCBROWN:
+        FW.write('<a href=' + conUTRGVMiscLinkBrown + imageId     + '/ class="button">View UTRGV Miscellaneous</a>&nbsp;&nbsp;')
     elif imageSource == conOTHER:
         FW.write('<a href=' + imageId                        + '/ class="button">View Source Article</a>')
-    
+        
+        
+        
+    #elif imageSource == conNONE: do nothing
+           
 def writeImageEnlarged(FW, imageFile):    
     FW.write('<a href=' + imageFile + ' class="button">'                          + 'View Enlarged</a>&nbsp;&nbsp;')
 
