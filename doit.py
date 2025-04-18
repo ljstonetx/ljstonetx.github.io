@@ -18,18 +18,19 @@
 
 #todo: card rio rico gambling - view article not working:
 #infrastructure: U149, U149 need info, are these from UTRGV
-#UTRGV has a bunch of photos that I need to input
+
 
 import csv
 
 conSiteShortTitle = "Mercedes Historic Photograps"
 conSiteLongTitle = "Mercedes Texas 1900s to 1950s History and Images"
 conEmailAddress = "mercedestx@gmail.com"
-conNumCards=195
+conNumCards=200
 conNumHxRows=47
 conNumHxTopics=4
 conNumSubjects=22  #includes Citations in a kludge
 conPostCardFile='PostcardSorted.csv'
+#conPostCardFile='newcards.csv'
 conSubjectsFile='postcardViewsSorted.csv'
 conHistoryFile='History.csv'
 conFileSubjects='index.html'
@@ -40,11 +41,15 @@ conCitationsFile = "Citations.pdf"
 conSMULink         = 'https://digitalcollections.smu.edu/digital/collection/tex/id/'
 conUTRGVStudioLink = 'https://scholarworks.utrgv.edu/rgvstudio/' 
 conUTRGVMiscLink   = 'https://scholarworks.utrgv.edu/miscphotosedinburg/'
-conUTRGVMiscLinkBrown   = 'https://scholarworks.utrgv.edu/miscphotosbrownsville/'  
+conUTRGVMiscLinkBrown = 'https://scholarworks.utrgv.edu/miscphotosbrownsville/'
+conUTRGVMiscLinkHidal = 'https://scholarworks.utrgv.edu/hidalgohist_aa/'  
+conTXHISARCLink = 'https://tsl.access.preservica.com/?s=mercedes&hh_cmis_filter=xip.content_type_r_Display/image'
 conSMU = "SMU"
 conUTRGVSTUDIO = "UTRGVSTUDIO"
 conUTRGVMISC   = "UTRGVMISC"
 conUTRGVMISCBROWN   = "UTRGVMISCBROWN"
+conUTRGVHIDAL   = "UTRGVHIDAL"
+conTXHISARC = "TXHISARC"
 conOTHER       = "OTHER"
 conNONE       = "NONE"
 
@@ -117,23 +122,25 @@ def writeImage(FW, imageFile):
 
 
 def writeSourceLink(FW, imageSource, imageId):
+    conLibButton = '/ class="button">View Library</a>&nbsp;&nbsp;'
     if imageSource == conSMU:
-        FW.write('<a href=' + conSMULink +  imageId          + '/ class="button">View High Resolution</a>&nbsp;&nbsp;')
+        FW.write('<a href=' + conSMULink +  imageId          + conLibButton)
     elif imageSource == conUTRGVSTUDIO: 
-        FW.write('<a href=' + conUTRGVStudioLink + imageId   + '/ class="button">View UTRGV Studio</a>&nbsp;&nbsp;')
+        FW.write('<a href=' + conUTRGVStudioLink + imageId   + conLibButton)
     elif imageSource == conUTRGVMISC:
-        FW.write('<a href=' + conUTRGVMiscLink + imageId     + '/ class="button">View UTRGV Miscellaneous</a>&nbsp;&nbsp;')
+        FW.write('<a href=' + conUTRGVMiscLink + imageId     + conLibButton)
     elif imageSource == conUTRGVMISCBROWN:
-        FW.write('<a href=' + conUTRGVMiscLinkBrown + imageId     + '/ class="button">View UTRGV Miscellaneous</a>&nbsp;&nbsp;')
+        FW.write('<a href=' + conUTRGVMiscLinkBrown + imageId     + conLibButton)
     elif imageSource == conOTHER:
         FW.write('<a href=' + imageId                        + '/ class="button">View Source Article</a>')
-        
-        
-        
+    elif imageSource == conUTRGVHIDAL:
+        FW.write('<a href=' + conUTRGVMiscLinkHidal + imageId  + conLibButton)
+    elif imageSource == conTXHISARC:
+        FW.write('<a href=' + conTXHISARCLink  + conLibButton)
     #elif imageSource == conNONE: do nothing
            
 def writeImageEnlarged(FW, imageFile):    
-    FW.write('<a href=' + imageFile + ' class="button">'                          + 'View Enlarged</a>&nbsp;&nbsp;')
+    FW.write('<a href=' + imageFile + ' class="button">' + 'View Enlarged</a>&nbsp;&nbsp;')
 
 
 def writeSubjects():
@@ -173,7 +180,7 @@ def writeSubjects():
                     # Citations.pdf file was made by importing citations.csv into a google doc, format order as
                     # number, wrapping the citation column, and exporting to pdf. Then copying file to source code directory               
                    writeSubjectFile(subject, heading) 
-               print(subject)        
+                       
            
         writeHeader(FW, conSiteLongTitle, conSiteLongTitle)
         FW.write('</body></html>')
@@ -198,8 +205,10 @@ def writeSubjectFile(subject, heading):
     from itertools import islice
     with open(conPostCardFile) as csvfile:
         reader = csv.reader(csvfile)       
-        for row in islice(reader, conNumCards): 
+        for row in islice(reader, conNumCards):
+            #print(row[subjectIdx])            
             if row[subjectIdx] != subject: continue
+            
             if row[scoreIdx] == "0": continue
             imageFile = makeColorFileName(row[keyIdx])
             writeImage(FW,imageFile)
@@ -207,11 +216,9 @@ def writeSubjectFile(subject, heading):
             writeDate(FW, row[keyIdx])                    
             writeTitle2(FW, row[headingIdx])
             writeDate(FW, row[dateIdx])
-           
             writeDescription(FW, row[descriptionIdx])
- 
-            writeSourceLink(FW, row[sourceIdx], row[idIdx]) 
             writeImageEnlarged(FW,imageFile)
+            writeSourceLink(FW, row[sourceIdx], row[idIdx])
             FW.write('<br><br>') 
             FW.write('</div>')
                 
