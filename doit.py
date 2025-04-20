@@ -43,7 +43,8 @@ conUTRGVStudioLink = 'https://scholarworks.utrgv.edu/rgvstudio/'
 conUTRGVMiscLink   = 'https://scholarworks.utrgv.edu/miscphotosedinburg/'
 conUTRGVMiscLinkBrown = 'https://scholarworks.utrgv.edu/miscphotosbrownsville/'
 conUTRGVMiscLinkHidal = 'https://scholarworks.utrgv.edu/hidalgohist_aa/'  
-conTXHISARCLink = 'https://tsl.access.preservica.com/?s=mercedes&hh_cmis_filter=xip.content_type_r_Display/image'
+#conTXHISARCLink = 'https://tsl.access.preservica.com/?s=mercedes&hh_cmis_filter=xip.content_type_r_Display/image'
+conTXHISARCLink = 'https://tsl.access.preservica.com/uncategorized/'
 conSMU = "SMU"
 conUTRGVSTUDIO = "UTRGVSTUDIO"
 conUTRGVMISC   = "UTRGVMISC"
@@ -98,7 +99,7 @@ def writeHomeHeader(FW):
     writeShortHeading(FW,conSiteLongTitle)
     FW.write('<br>')  
     
-    FW.write('<div><p1>This website offer a glimpse into the early history of Mercedes, Texas. In the early 1900s, Mercedes and the Lower Rio Grande Valley underwent a transformative shift, moving from traditional ranching to commercial agriculture. This set the stage for significant growth and marked a dynamic period in the regional development. The era is well-documented, largely due to the popularity of postcards, which were popular during that time. The historical context provided on these pages is from various sources which can be explored further on the Citations page.</div><p1>')
+    FW.write('<div><p1>This website offer a glimpse into the early history of Mercedes, Texas. In the early 1900s, Mercedes and the Lower Rio Grande Valley underwent a transformative shift, moving from traditional ranching to commercial agriculture. This set the stage for significant growth and marked a dynamic period in the regional development. Explore the historical context on the Citations page. Press the View Library button for image citations.</div><p1>')
     FW.write('</div><br>')    
 
 def writeHeader(FW, subject, heading):
@@ -136,7 +137,7 @@ def writeSourceLink(FW, imageSource, imageId):
     elif imageSource == conUTRGVHIDAL:
         FW.write('<a href=' + conUTRGVMiscLinkHidal + imageId  + conLibButton)
     elif imageSource == conTXHISARC:
-        FW.write('<a href=' + conTXHISARCLink  + conLibButton)
+        FW.write('<a href=' + conTXHISARCLink  + imageId + conLibButton)
     #elif imageSource == conNONE: do nothing
            
 def writeImageEnlarged(FW, imageFile):    
