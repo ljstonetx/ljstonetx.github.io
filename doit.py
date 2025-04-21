@@ -28,7 +28,7 @@ conEmailAddress = "mercedestx@gmail.com"
 conNumCards=200
 conNumHxRows=47
 conNumHxTopics=4
-conNumSubjects=22  #includes Citations in a kludge
+conNumSubjects=23  #includes Citations in a kludge
 conPostCardFile='PostcardSorted.csv'
 #conPostCardFile='newcards.csv'
 conSubjectsFile='postcardViewsSorted.csv'
@@ -150,7 +150,8 @@ def writeSubjects():
     keyIdx = 2
     descriptionIdx =3
     headingIdx=4
-    FW= open(conFileSubjects, "w+")    
+    FW= open(conFileSubjects, "w+") 
+    
     writeStyle(FW)   
 
     writeHomeHeader(FW) 
@@ -206,8 +207,7 @@ def writeSubjectFile(subject, heading):
     from itertools import islice
     with open(conPostCardFile) as csvfile:
         reader = csv.reader(csvfile)       
-        for row in islice(reader, conNumCards):
-            #print(row[subjectIdx])            
+        for row in islice(reader, conNumCards):         
             if row[subjectIdx] != subject: continue
             
             if row[scoreIdx] == "0": continue
