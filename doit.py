@@ -21,7 +21,7 @@
 
 
 import csv
-
+conDescription= "<div><p1>Discover the rich history of Mercedes, Texas, through the website mercedestx.com. This site offers a captivating glimpse into the city's early 20th-century transformation from ranching to commercial agriculture, showcasing its dynamic growth during that period. Explore a curated collection of historic photographs and narratives that highlight significant landmarks, such as architecturally notable schools along Ohio Street, the grand Mercedes Hotel built in 1907, and pivotal military training camps like Camp Mercedes and Camp Llano Grande. The website also delves into the development of the city's irrigation system, early industries, and the evolution of its downtown area. Whether you're a history enthusiast or a curious traveler, here you find an engaging journey through the heritage of this charming South Texas town. Source images are from digital collections at Texas State Library, University of Texas and SMU.  We welcome feedback and comments at lisajensenstone@gmail.com.</div></p1>"
 conSiteShortTitle = "Mercedes Historic Photograps"
 conSiteLongTitle = "Mercedes Texas 1900s to 1950s History and Images"
 conEmailAddress = "mercedestx@gmail.com"
@@ -43,7 +43,6 @@ conUTRGVStudioLink = 'https://scholarworks.utrgv.edu/rgvstudio/'
 conUTRGVMiscLink   = 'https://scholarworks.utrgv.edu/miscphotosedinburg/'
 conUTRGVMiscLinkBrown = 'https://scholarworks.utrgv.edu/miscphotosbrownsville/'
 conUTRGVMiscLinkHidal = 'https://scholarworks.utrgv.edu/hidalgohist_aa/'  
-#conTXHISARCLink = 'https://tsl.access.preservica.com/?s=mercedes&hh_cmis_filter=xip.content_type_r_Display/image'
 conTXHISARCLink = 'https://tsl.access.preservica.com/uncategorized/'
 conSMU = "SMU"
 conUTRGVSTUDIO = "UTRGVSTUDIO"
@@ -99,8 +98,8 @@ def writeHomeHeader(FW):
     writeShortHeading(FW,conSiteLongTitle)
     FW.write('<br>')  
     
-    FW.write('<div><p1>This website offer a glimpse into the early history of Mercedes, Texas. In the early 1900s, Mercedes and the Lower Rio Grande Valley underwent a transformative shift, moving from traditional ranching to commercial agriculture. This set the stage for significant growth and marked a dynamic period in the regional development. Explore the historical context on the Citations page. Press the View Library button for image citations.</div><p1>')
-    FW.write('</div><br>')    
+    FW.write(conDescription)
+    FW.write('<br>')      
 
 def writeHeader(FW, subject, heading):
     FW.write('<div id="flexHeader">')
