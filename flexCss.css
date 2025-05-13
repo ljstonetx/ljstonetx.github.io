@@ -79,7 +79,7 @@ a:hover,
 a:active {background-color: #52B2BF;color:white}
 
 
-.button {
+.oldbutton {
   font: bold .75em Arial ;
   color: white; # has no effect, why not???
   !font: 2em;
@@ -92,4 +92,19 @@ a:active {background-color: #52B2BF;color:white}
   border-bottom: 1px solid #9F9F9F;
   border-left: 1px solid#9F9F9F;
 }
+    .button {
+      background-color: #4CAF50; /* Green */
+      border: none;
+      color: white;
+      padding: 12px 24px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      font-family: Arial, sans-serif;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
 </style>
