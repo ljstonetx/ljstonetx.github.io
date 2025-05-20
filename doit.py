@@ -91,10 +91,9 @@ def write_heading(fw, heading, is_home=False):
     if is_home:
         fw.write(f'<p2>{heading}<br></p2>\n')
     else:
-        fw.write(f'<p2>{heading}<br><br><a href="{SUBJECTS_HTML}" class="button" target="_blank">Home</a></p2>\n')
+        fw.write(f'<p2>{heading}<br><br><a href="{SUBJECTS_HTML}" class="button" target="_blank">Go Home</a></p2>\n')
     fw.write('</div><br>\n')
 
-     
 def write_history_title(FW, title):
     FW.write('<p1><div>')
     FW.write('<font color="+COLOR_TITLE"+"> <strong>' + title + ' </strong></font>')
@@ -124,16 +123,29 @@ def write_source_link(fw, source, source_id):
     else:
         fw.write(f'<a href="{source_id}" class="button">View Source Article</a>\n')
 
+
+def write_heading(fw, heading, is_home=False):
+    fw.write('<div id="flexHeader">\n')
+    if is_home:
+        fw.write(f'<p2>{heading}<br></p2>\n')
+    else:
+        fw.write(f'<p2>{heading}<br><br><a href="{SUBJECTS_HTML}" class="button" target="_blank">Go Home</a></p2>\n')
+    fw.write('</div><br>\n')
+
 def write_home_intro(fw):
     write_heading(fw, SITE_LONG_TITLE, is_home=True)
+    
+    fw.write('<div id="flexHeader">\n')
     intro = (
-        "<div><p1>This website offers a glimpse into the early history of Mercedes, Texas. "
+        "<p3>This website offers a glimpse into the early history of Mercedes, Texas."
         "In the early 1900s, Mercedes and the Lower Rio Grande Valley underwent a transformative shift, "
         "moving from traditional ranching to commercial agriculture. This set the stage for significant growth "
         "and marked a dynamic period in the regional development. Explore the historical context on the Citations page. "
         "Press the View Library button for image citations.Send feedback to mercedesimages@gmail.com.</p1></div><br>"
+        "</p3></div><br>"
     )
     fw.write(intro)
+
 
 def write_subjects():
     with open(SUBJECTS_HTML, "w", encoding="utf-8") as fw:
@@ -162,16 +174,29 @@ def write_subjects():
                    
                    write_postcard_subject(subject, heading)
 
-        write_citations(fw)
+        #write_citations(fw)
         write_heading(fw, SITE_LONG_TITLE, heading)
         fw.write('</body></html>')
+
+def write_AIHeading2(fw, heading):
+
+    fw.write('<div class="banner">' + heading + '<class="button" onclick=' + "location.href='index.html'"+ '>Go Home</button></div><br>')
+    
+
+def write_AIHeading(fw, heading):
+
+    fw.write('<div class="banner">' + heading )
+    fw.write(f'<a href=index.html class="button">Go Home</a>\n')
+    fw.write('</div><br>')
+
 
 def write_postcard_subject(subject, heading):
     filename = make_html_filename(subject)
     with open(filename, "w", encoding="utf-8") as fw:
         write_style(fw)
+        #write_AIHeading(fw,heading)
+        
         write_heading(fw, heading)
-  
         with open(POSTCARD_FILE, newline='') as csvfile:
             reader = csv.reader(csvfile)
             
@@ -196,6 +221,7 @@ def write_postcard_subject(subject, heading):
         fw.write('</body></html>')
             
 def write_history_subject(subject, heading):
+    subjectIdx = 1
     filename = make_html_filename(subject)
     with open(filename, "w", encoding="utf-8") as fw:
         write_style(fw)
@@ -204,6 +230,7 @@ def write_history_subject(subject, heading):
         with open(HISTORY_FILE, newline='') as csvfile:
             reader = csv.reader(csvfile)
             for row in islice(reader,1,None):
+                if row[subjectIdx] != subject: continue
                 title, _, image, citation_text, date, summary, link = row[:7]
                 image_path = make_history_image_path(image)
                 write_image(fw, image_path)

@@ -1,0 +1,161 @@
+body {
+  background-color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#flexHeader {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  font-family: "Arial Light", Helvetica, sans-serif;
+  text-align: center;
+  align-items: center;
+}
+
+/* Flex Wrap */
+.flex-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+.flex-wrap img {
+  max-width: 60%;
+  max-height: 225px;
+  margin: 0 auto 1em;
+}
+.flex-wrap p {
+  flex: 1;
+}
+
+/* Paragraph Styles */
+p.a {
+  font-family: "Times New Roman", Times, serif;
+}
+p.b {
+  font-family: "Arial Light", Helvetica, sans-serif;
+}
+
+/* Custom Paragraph Styles – not standard HTML, consider using classes instead of p1, p2, p3 */
+.p1 {
+  font-family: Helvetica, sans-serif;
+}
+
+.p2 {
+  font-family: sans-serif;
+  font-weight: bold;
+  background-image: linear-gradient(#9BE3E4, #CDF1F2);
+  padding: 1em 20em 1em;
+  border: 0 solid #80D8DA;
+  border-radius: 5px;
+}
+
+.p3 {
+  font-family: sans-serif;
+  font-weight: normal;
+  background-image: linear-gradient(#CDF1F2, #CDF1F2);
+  padding: 1em 10em 1em;
+  border: 1px solid #80D8DA;
+  border-radius: 1px;
+}
+
+/* Links */
+a:link,
+a:visited {
+  background-color: #80D8DA;
+  color: black;
+  padding: 10px 18px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 8px;
+}
+a:hover,
+a:active {
+  background-color: #52B2BF;
+  color: white;
+}
+
+/* Button */
+.button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 0.85em;
+  font-family: Arial, sans-serif;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Banner */
+.banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #80D8DA;
+  color: black;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.banner h1 {
+  margin: 0 0 20px;
+  font-size: 1.25em;
+}
+
+/* Button 2 */
+.button2 {
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: white;
+  color: #80D8DA;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.button2:hover {
+  background-color: #e0e0e0;
+}
+
+/* Responsive */
+@media only screen and (max-width: 600px) {
+  .flex-wrap {
+    gap: 5px;
+  }
+
+  .p1,
+  .p2,
+  .p3 {
+    font-size: 0.8rem;
+  }
+
+  .p2 {
+    font-weight: bold;
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+
+  .p3 {
+    font-weight: normal;
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+
+  img {
+    max-width: 50%;
+    height: auto;
+    min-width: 0;
+  }
+
+  h1 {
+    font-size: 0.1em;
+  }
+}
