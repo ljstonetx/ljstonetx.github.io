@@ -23,6 +23,9 @@
 import csv
 from itertools import islice
 conDescription= "<div><p1>Discover the rich history of Mercedes, Texas, through the website mercedestx.com. This site offers a captivating glimpse into the city's early 20th-century transformation from ranching to commercial agriculture, showcasing its dynamic growth during that period. Explore a curated collection of historic photographs and narratives that highlight significant landmarks, such as architecturally notable schools along Ohio Street, the grand Mercedes Hotel built in 1907, and pivotal military training camps like Camp Mercedes and Camp Llano Grande. The website also delves into the development of the city's irrigation system, early industries, and the evolution of its downtown area. Whether you're a history enthusiast or a curious traveler, here you find an engaging journey through the heritage of this charming South Texas town. Source images are from digital collections at Texas State Library, University of Texas and SMU.  We welcome feedback and comments at mercedesimages@gmail.com.</div></p1>"
+conMercedesTx =  "This website offers a glimpse into the early history of Mercedes, Texas. In the early 1900s, Mercedes and the Lower Rio Grande Valley underwent a transformative moving from traditional ranching to commercial agriculture. This set the stage for significant growthshift,moving from traditional ranching to commercial agriculture. This set and marked a dynamic period in the regional development. Explore the historical context on the Citations page. the stage for significant growth and marked a dynamic period in the regional development. Explore the historical context on the Citations page. Press the View Library button for image citations.Send feedback to mercedesimages@gmail.com." 
+
+
 # --- Constants ---
 
 SITE_SHORT_TITLE = "Mercedes Historic Photographs"
@@ -132,17 +135,21 @@ def write_heading(fw, heading, is_home=False):
         fw.write(f'<p2>{heading}<br><br><a href="{SUBJECTS_HTML}" class="button" target="_blank">Go Home</a></p2>\n')
     fw.write('</div><br>\n')
 
-def write_home_intro(fw):
+def write_home_intro(fw, heading):
     write_heading(fw, SITE_LONG_TITLE, is_home=True)
     
     fw.write('<div id="flexHeader">\n')
     intro = (
-        "<p3>This website offers a glimpse into the early history of Mercedes, Texas."
-        "In the early 1900s, Mercedes and the Lower Rio Grande Valley underwent a transformative shift, "
-        "moving from traditional ranching to commercial agriculture. This set the stage for significant growth "
-        "and marked a dynamic period in the regional development. Explore the historical context on the Citations page. "
-        "Press the View Library button for image citations.Send feedback to mercedesimages@gmail.com.</p1></div><br>"
-        "</p3></div><br>"
+        "<p3>" + heading + "</p3></div><br>"
+    )
+    fw.write(intro)
+
+def write_subject_intro(fw, heading):
+    #write_heading(fw, SITE_LONG_TITLE, is_home=True)
+    
+    fw.write('<div id="flexHeader">\n')
+    intro = (
+        "<p3>" + heading + "</p3></div><br>"
     )
     fw.write(intro)
 
@@ -150,7 +157,7 @@ def write_home_intro(fw):
 def write_subjects():
     with open(SUBJECTS_HTML, "w", encoding="utf-8") as fw:
         write_style(fw)
-        write_home_intro(fw)
+        write_home_intro(fw, conMercedesTx)
 
         with open(SUBJECTS_FILE, newline='') as csvfile:
             reader = csv.reader(csvfile)     
@@ -161,42 +168,32 @@ def write_subjects():
                write_image(fw, image_path)
                fw.write('<p1>')
                write_title(fw, heading) 
+               
                write_description(fw, description)
                htmlName= make_html_filename(subject);
                fw.write('<a href=' + htmlName         + ' class="button">' + 'View '+ subject + '</a>')
                fw.write('</div><br>')
                
                if subject in {"Fuste", "Colegio", "Rio Rico"}:
-                    write_history_subject(subject,heading)
+                    write_history_subject(subject,heading, description)
                elif (subject != "Citations"):
                     # Citations.pdf file was made by importing citations.csv into a google doc, format order as
                     # number, wrapping the citation column, and exporting to pdf. Then copying file to source code directory               
                    
-                   write_postcard_subject(subject, heading)
+                   write_postcard_subject(subject, heading, description)
 
         #write_citations(fw)
         write_heading(fw, SITE_LONG_TITLE, heading)
         fw.write('</body></html>')
 
-def write_AIHeading2(fw, heading):
-
-    fw.write('<div class="banner">' + heading + '<class="button" onclick=' + "location.href='index.html'"+ '>Go Home</button></div><br>')
-    
-
-def write_AIHeading(fw, heading):
-
-    fw.write('<div class="banner">' + heading )
-    fw.write(f'<a href=index.html class="button">Go Home</a>\n')
-    fw.write('</div><br>')
 
 
-def write_postcard_subject(subject, heading):
+def write_postcard_subject(subject, heading, description):
     filename = make_html_filename(subject)
     with open(filename, "w", encoding="utf-8") as fw:
         write_style(fw)
-        #write_AIHeading(fw,heading)
-        
         write_heading(fw, heading)
+        write_subject_intro(fw, description)
         with open(POSTCARD_FILE, newline='') as csvfile:
             reader = csv.reader(csvfile)
             
@@ -220,13 +217,13 @@ def write_postcard_subject(subject, heading):
         write_heading(fw, heading)
         fw.write('</body></html>')
             
-def write_history_subject(subject, heading):
+def write_history_subject(subject, heading, description):
     subjectIdx = 1
     filename = make_html_filename(subject)
     with open(filename, "w", encoding="utf-8") as fw:
         write_style(fw)
         write_heading(fw, heading)
-
+        write_subject_intro(fw, description)
         with open(HISTORY_FILE, newline='') as csvfile:
             reader = csv.reader(csvfile)
             for row in islice(reader,1,None):
