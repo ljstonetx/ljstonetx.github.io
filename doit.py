@@ -22,25 +22,34 @@
 
 import csv
 from itertools import islice
-conDescription= "<div><p1>Discover the rich history of Mercedes, Texas, through the website mercedestx.com. This site offers a captivating glimpse into the city's early 20th-century transformation from ranching to commercial agriculture, showcasing its dynamic growth during that period. Explore a curated collection of historic photographs and narratives that highlight significant landmarks, such as architecturally notable schools along Ohio Street, the grand Mercedes Hotel built in 1907, and pivotal military training camps like Camp Mercedes and Camp Llano Grande. The website also delves into the development of the city's irrigation system, early industries, and the evolution of its downtown area. Whether you're a history enthusiast or a curious traveler, here you find an engaging journey through the heritage of this charming South Texas town. Source images are from digital collections at Texas State Library, University of Texas and SMU.  We welcome feedback and comments at mercedesimages@gmail.com.</div></p1>"
-conMercedesTx =  "This website offers a glimpse into the early history of Mercedes, Texas. In the early 1900s, Mercedes and the Lower Rio Grande Valley underwent a transformative moving from traditional ranching to commercial agriculture. This set the stage for significant growthshift,moving from traditional ranching to commercial agriculture. This set and marked a dynamic period in the regional development. Explore the historical context on the Citations page. the stage for significant growth and marked a dynamic period in the regional development. Explore the historical context on the Citations page. Press the View Library button for image citations.Send feedback to mercedesimages@gmail.com." 
 
-
-# --- Constants ---
 
 SITE_SHORT_TITLE = "Mercedes Historic Photographs"
 SITE_LONG_TITLE = "Mercedes Texas 1900s to 1950s History and Images"
 EMAIL_ADDRESS = "mercedestx@gmail.com"
-
 
 POSTCARD_FILE = 'PostcardSorted.csv'
 SUBJECTS_FILE = 'postcardViewsSorted.csv'
 HISTORY_FILE = 'History.csv'
 HISTORY_TEXT_FILE = 'historyText.csv'
 SUBJECTS_HTML = 'index.html'
+ABOUT_HTML = 'about.html'
 COLOR_IMAGE_DIR = 'imagesColorized/'
 CITATIONS_FILE = 'Citations.pdf'
 CITATIONS_TITLE = "Citations for Mercedes History Information"
+
+
+conAbout= "<div><p1>"+ SITE_LONG_TITLE + " provides links to images provided by the DeGolyer Library at Southern Methodist University, Texas Digital Archive, the University of Texas Rio Grande Valley and Dr. Hector P. Garcia Memorial Library via The Portal to Texas History. For individual image citations, press the View Library button by the image. <br><br> Historic information was derived from over 100 sources, with the local newspaper serving as the primary reference. Additionally, numerous books, articles, and websites have contributed valuable insights. We have made every effort to properly acknowledge these sources on the Citations page. <a href=" + CITATIONS_FILE +" class='button'>View Citations </a><br><br>Please send questions and  feedback to mercedesimages@gmail.com.<div></p1>"
+
+
+conMercedesTx =  "This website offers a glimpse into the early history of Mercedes, Texas. In the early 1900s, Mercedes and the Lower Rio Grande Valley underwent a transformative moving from traditional ranching to commercial agriculture. This set the stage for significant growthshift,moving from traditional ranching to commercial agriculture. This set and marked a dynamic period in the regional development. Explore the images which record era organized here by category." 
+
+
+# --- Constants ---
+
+
+
+
 SOURCE_LINKS = {
     "SMU": 'https://digitalcollections.smu.edu/digital/collection/tex/id/',
     "UTRGVSTUDIO": 'https://scholarworks.utrgv.edu/rgvstudio/',
@@ -89,13 +98,6 @@ def write_style(fw):
 ''')
 
 
-def write_heading(fw, heading, is_home=False):
-    fw.write('<div id="flexHeader">\n')
-    if is_home:
-        fw.write(f'<p2>{heading}<br></p2>\n')
-    else:
-        fw.write(f'<p2>{heading}<br><br><a href="{SUBJECTS_HTML}" class="button" target="_blank">Go Home</a></p2>\n')
-    fw.write('</div><br>\n')
 
 def write_history_title(FW, title):
     FW.write('<p1><div>')
@@ -111,7 +113,7 @@ def write_header(FW, subject, heading):
     FW.write('</div><br>')
 
 def write_citations(FW):
-    FW.write('<div>View source citations:  <a href=' + CITATIONS_FILE + 'class="button">' + 'View Citations </a></div>')
+    FW.write('<a href=' + CITATIONS_FILE + 'class="button">' + 'View Citations </a>')
 
 def write_date(fw, date):
     fw.write('<font color='+COLOR_DATE+'>'+date+'</font>\n')
@@ -130,7 +132,7 @@ def write_source_link(fw, source, source_id):
 def write_heading(fw, heading, is_home=False):
     fw.write('<div id="flexHeader">\n')
     if is_home:
-        fw.write(f'<p2>{heading}<br></p2>\n')
+        fw.write(f'<p2>{heading}<br><br><a href="{ABOUT_HTML}" class="button" target="_blank">About</a></p2>\n')
     else:
         fw.write(f'<p2>{heading}<br><br><a href="{SUBJECTS_HTML}" class="button" target="_blank">Go Home</a></p2>\n')
     fw.write('</div><br>\n')
@@ -145,14 +147,27 @@ def write_home_intro(fw, heading):
     fw.write(intro)
 
 def write_subject_intro(fw, heading):
-    #write_heading(fw, SITE_LONG_TITLE, is_home=True)
-    
+     
     fw.write('<div id="flexHeader">\n')
     intro = (
         "<p3>" + heading + "</p3></div><br>"
     )
     fw.write(intro)
 
+def write_about():
+    with open(ABOUT_HTML, "w", encoding="utf-8") as fw:
+        write_style(fw)
+        #write_home_intro(fw,conAbout )
+        write_heading(fw, SITE_LONG_TITLE)
+     
+        fw.write('<div id="flexHeader">\n')
+        intro = (
+        "<p3>" + conAbout + "</p3></div><br>"
+        )     
+        fw.write(intro)
+        
+        image_path = make_image_path("E006")       
+        write_image(fw, image_path)
 
 def write_subjects():
     with open(SUBJECTS_HTML, "w", encoding="utf-8") as fw:
@@ -177,10 +192,10 @@ def write_subjects():
                if subject in {"Fuste", "Colegio", "Rio Rico"}:
                     write_history_subject(subject,heading, description)
                elif (subject != "Citations"):
-                    # Citations.pdf file was made by importing citations.csv into a google doc, format order as
-                    # number, wrapping the citation column, and exporting to pdf. Then copying file to source code directory               
+                # Citations.pdf file was made by importing citations.csv into a google doc, format order as
+                # number, wrapping the citation column, and exporting to pdf. Then copying file to source code directory               
                    
-                   write_postcard_subject(subject, heading, description)
+                write_postcard_subject(subject, heading, description)
 
         #write_citations(fw)
         write_heading(fw, SITE_LONG_TITLE, heading)
@@ -241,6 +256,7 @@ def write_history_subject(subject, heading, description):
         write_heading(fw, heading)
         fw.write('</body></html>')
 
+write_about()
 write_subjects()
 
 #check this out https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-flexbox-tricks
