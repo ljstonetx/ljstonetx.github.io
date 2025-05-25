@@ -39,10 +39,10 @@ CITATIONS_FILE = 'Citations.pdf'
 CITATIONS_TITLE = "Citations for Mercedes History Information"
 
 
-conAbout= "<div><p1>"+ SITE_LONG_TITLE + " provides links to images provided by the DeGolyer Library at Southern Methodist University, Texas Digital Archive, the University of Texas Rio Grande Valley and Dr. Hector P. Garcia Memorial Library via The Portal to Texas History. For individual image citations, press the View Library button by the image. <br><br> Historic information was derived from over 100 sources, with the local newspaper serving as the primary reference. Additionally, numerous books, articles, and websites have contributed valuable insights. We have made every effort to properly acknowledge these sources on the Citations page. <a href=" + CITATIONS_FILE +" class='button'>View Citations </a><br><br>Please send questions and  feedback to mercedesimages@gmail.com.<div></p1>"
+conAbout= "<div><p1>"+ SITE_LONG_TITLE + " provides links to images provided by the DeGolyer Library at Southern Methodist University, Texas Digital Archive, the University of Texas Rio Grande Valley and Dr. Hector P. Garcia Memorial Library via The Portal to Texas History. For individual image citations, press the View Library button by the image. <br><br> Historic information was derived from over 100 sources, with the local newspaper serving as the primary reference. Additionally, numerous books, articles, and websites have contributed valuable insights. We have made every effort to properly acknowledge these sources on the Citations page. <a href=" + CITATIONS_FILE +" class='button'>View Citations </a><br><br>Thank you for visiting this site. Please send questions and  feedback to mercedesimages@gmail.com.<div></p1>"
 
 
-conMercedesTx =  "This website offers a glimpse into the early history of Mercedes, Texas. In the early 1900s, Mercedes and the Lower Rio Grande Valley underwent a transformative moving from traditional ranching to commercial agriculture. This set the stage for significant growthshift,moving from traditional ranching to commercial agriculture. This set and marked a dynamic period in the regional development. Explore the images which record era organized here by category." 
+conMercedesTx =  "Whether you're a resident, a former local, or just curious, this site offers a rich collection of photographs capturing the spirit of Mercedes, Texas. In the early 1900s, Mercedes and the Lower Rio Grande Valley underwent a transformative moving from traditional ranching to commercial agriculture. This set and marked a dynamic period in the regional development. Explore the images which record this earlier time." 
 
 
 # --- Constants ---
@@ -132,9 +132,9 @@ def write_source_link(fw, source, source_id):
 def write_heading(fw, heading, is_home=False):
     fw.write('<div id="flexHeader">\n')
     if is_home:
-        fw.write(f'<p2>{heading}<br><br><a href="{ABOUT_HTML}" class="button" target="_blank">About</a></p2>\n')
+        fw.write(f'<p2>{heading}<br><br><a href="{ABOUT_HTML}" class="button" target="_blank">About this Site</a></p2>\n')
     else:
-        fw.write(f'<p2>{heading}<br><br><a href="{SUBJECTS_HTML}" class="button" target="_blank">Go Home</a></p2>\n')
+        fw.write(f'<p2>{heading}<br><br><a href="{SUBJECTS_HTML}" class="button" target="_blank">Home Page</a></p2>\n')
     fw.write('</div><br>\n')
 
 def write_home_intro(fw, heading):
@@ -157,7 +157,6 @@ def write_subject_intro(fw, heading):
 def write_about():
     with open(ABOUT_HTML, "w", encoding="utf-8") as fw:
         write_style(fw)
-        #write_home_intro(fw,conAbout )
         write_heading(fw, SITE_LONG_TITLE)
      
         fw.write('<div id="flexHeader">\n')
@@ -168,6 +167,8 @@ def write_about():
         
         image_path = make_image_path("E006")       
         write_image(fw, image_path)
+        
+        
 
 def write_subjects():
     with open(SUBJECTS_HTML, "w", encoding="utf-8") as fw:
