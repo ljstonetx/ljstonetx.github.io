@@ -1,4 +1,6 @@
-/* Base Styles */
+<html>
+<head>
+<style>
 body {
   font-family: Georgia, serif;
   line-height: 1.6;
@@ -11,20 +13,23 @@ body {
 
 h1, h2, h3 {
   font-family: 'Helvetica Neue', sans-serif;
-  color: #2c3e50;
 }
 
+
 h1 {
+	color: #191970;
   font-size: 2rem;
   margin-bottom: 1rem;
 }
 
 h2 {
+	color: #b22222;
   font-size: 1.5rem;
   margin-top: 2rem;
 }
 
 h3 {
+	color: #b22222;
   font-size: 1.2rem;
   margin-top: 1.5rem;
 }
@@ -44,34 +49,6 @@ em {
 strong {
   font-weight: bold;
 }
-
-/* Responsive Styles */
-@media only screen and (max-width: 600px) {
-  body {
-    font-size: 0.95rem;
-    padding: 0 0.75rem;
-    margin: 1rem auto;
-  }
-
-  h1 {
-    font-size: 1.5rem;
-    text-align: center;
-  }
-
-  h2 {
-    font-size: 1.25rem;
-  }
-
-  h3 {
-    font-size: 1.05rem;
-  }
-
-  blockquote {
-    padding-left: 0.75rem;
-    font-size: 0.95rem;
-  }
-
-  p {
-    font-size: 0.95rem;
-  }
-}
+</style>
+</html>
+</head>
