@@ -52,9 +52,21 @@ strong {
 	@media only screen and (max-width: 600px) {
 
 p  {
-	font-size:0.80rem;
+	font-size:0.70rem;
 	}
+h1 {
+  font-size: 0.80rem;
+}
+h2 {
+  font-size: 0.70rem;
+}
 
+h3 {
+  font-size: 0.70rem;
+}
+blockquote {
+ font-size: 0.70rem;
+}
 </style>
 </html>
 </head>
