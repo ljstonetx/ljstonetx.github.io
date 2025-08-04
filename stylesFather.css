@@ -10,21 +10,31 @@ body {
   color: #333;
   background-color: #f9f9f9;
 }
+.header-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* space between image and text */
+}
+
+
+.imgSmall {
+  width: 100px; /* or whatever size you prefer */
+  height: auto;
+}
 
 h1, h2, h3 {
   font-family: 'Helvetica Neue', sans-serif;
 }
 
-
 h1 {
 	color: #191970;
-  font-size: 2rem;
+  font-size: 1.5rem;
   margin-bottom: 1rem;
 }
 
 h2 {
 	color: #b22222;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   margin-top: 2rem;
 }
 
@@ -48,6 +58,8 @@ em {
 
 strong {
   font-weight: bold;
+}
+img {width:12%; height: auto; 
 }
 @media only screen and (max-width: 600px) {
 
